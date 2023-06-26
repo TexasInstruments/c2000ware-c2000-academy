@@ -1,0 +1,98 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --board "/boards/TMDSCNCD280049C" --product "C2000WARE@4.01.00.00"
+ * @versions {"tool":"1.11.0+2225"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const adc        = scripting.addModule("/driverlib/adc.js", {}, false);
+const adc1       = adc.addInstance();
+const asysctl    = scripting.addModule("/driverlib/asysctl.js");
+const led        = scripting.addModule("/driverlib/board_components/led", {}, false);
+const led1       = led.addInstance();
+const cputimer   = scripting.addModule("/driverlib/cputimer.js", {}, false);
+const cputimer1  = cputimer.addInstance();
+const dma        = scripting.addModule("/driverlib/dma.js", {}, false);
+const dma1       = dma.addInstance();
+const epwm       = scripting.addModule("/driverlib/epwm.js", {}, false);
+const epwm1      = epwm.addInstance();
+const epwm2      = epwm.addInstance();
+const inputxbar  = scripting.addModule("/driverlib/inputxbar.js", {}, false);
+const inputxbar1 = inputxbar.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+adc1.$name                          = "myADC0";
+adc1.adcClockPrescaler              = "ADC_CLK_DIV_4_0";
+adc1.enabledSOCs                    = ["ADC_SOC_NUMBER0"];
+adc1.soc0Trigger                    = "ADC_TRIGGER_EPWM2_SOCA";
+adc1.soc0SampleWindow               = 8;
+adc1.interruptPulseMode             = "ADC_PULSE_END_OF_CONV";
+adc1.enabledInts                    = ["ADC_INT_NUMBER1"];
+adc1.enableInterrupt1               = true;
+adc1.enableInterrupt1ContinuousMode = true;
+
+asysctl.analogReference = "INTERNAL";
+
+led1.$name     = "myBoardLED0";
+led1.$hardware = system.deviceData.board.components.D2;
+
+cputimer1.$name       = "myCPUTIMER0";
+cputimer1.timerPeriod = 4294967295;
+
+dma1.$name                   = "myDMA0";
+dma1.enableTriggers          = true;
+dma1.triggerSource           = "DMA_TRIGGER_ADCA1";
+dma1.useInterrupts           = true;
+dma1.registerInterrupts      = true;
+dma1.enableInterrupts        = true;
+dma1.continuousModeConfig    = "DMA_CFG_CONTINUOUS_ENABLE";
+dma1.srcAddressInputMode     = "VARIABLE";
+dma1.srcAddressVariable      = "AdcAddr";
+dma1.destAddressInputMode    = "VARIABLE";
+dma1.destAddressVariable     = "AdcRawBufAddr";
+dma1.transferSize            = 50;
+dma1.destTransferStep        = 1;
+dma1.startChannel            = true;
+dma1.emulationMode           = "DMA_EMULATION_FREE_RUN";
+dma1.srcWrapSize             = 50;
+dma1.destWrapSize            = 50;
+dma1.dmaInt.interruptHandler = "dma_Ch1ISR";
+dma1.dmaInt.enableInterrupt  = true;
+
+epwm1.$name                                                      = "myEPWM0";
+epwm1.epwmTimebase_counterMode                                   = "EPWM_COUNTER_MODE_UP_DOWN";
+epwm1.epwmTimebase_period                                        = 25000;
+epwm1.epwmCounterCompare_cmpA                                    = 18750;
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_shadowMode            = true;
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_usedEvents            = ["EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPA","EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPA"];
+epwm1.epwm.$assign                                               = "EPWM1";
+
+epwm2.$name                                             = "myEPWM1";
+epwm2.epwmTimebase_counterMode                          = "EPWM_COUNTER_MODE_UP";
+epwm2.epwmTimebase_period                               = 1999;
+epwm2.epwmEventTrigger_EPWM_SOC_A_triggerEnable         = true;
+epwm2.epwmEventTrigger_EPWM_SOC_A_triggerSource         = "EPWM_SOC_TBCTR_PERIOD";
+epwm2.epwmEventTrigger_EPWM_SOC_A_triggerEventPrescalar = "1";
+
+inputxbar1.$name          = "myINPUTXBAR0";
+inputxbar1.inputsUsed     = ["inputxbar7Gpio"];
+inputxbar1.inputxbar7Gpio = "GPIO0";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+led1.gpio.gpioPin.$suggestSolution    = "hsecDigital.86";
+epwm1.epwm.epwm_aPin.$suggestSolution = "hsecDigital.49";
+epwm1.epwm.epwm_bPin.$suggestSolution = "hsecDigital.51";
+epwm2.epwm.$suggestSolution           = "EPWM2";
+epwm2.epwm.epwm_aPin.$suggestSolution = "hsecDigital.53";
+epwm2.epwm.epwm_bPin.$suggestSolution = "hsecDigital.55";

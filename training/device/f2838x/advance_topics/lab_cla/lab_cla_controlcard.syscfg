@@ -1,0 +1,88 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --board "/boards/TMDSCNCD28388D" --product "C2000WARE@4.01.00.00"
+ * @versions {"tool":"1.11.0+2225"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const adc    = scripting.addModule("/driverlib/adc.js", {}, false);
+const adc1   = adc.addInstance();
+const led    = scripting.addModule("/driverlib/board_components/led", {}, false);
+const led1   = led.addInstance();
+const cla    = scripting.addModule("/driverlib/cla.js", {}, false);
+const cla1   = cla.addInstance();
+const epwm   = scripting.addModule("/driverlib/epwm.js", {}, false);
+const epwm1  = epwm.addInstance();
+const epwm2  = epwm.addInstance();
+const memcfg = scripting.addModule("/driverlib/memcfg.js");
+const sync   = scripting.addModule("/driverlib/sync.js");
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+adc1.$name                          = "myADC0";
+adc1.adcClockPrescaler              = "ADC_CLK_DIV_4_0";
+adc1.enabledSOCs                    = ["ADC_SOC_NUMBER0"];
+adc1.soc0Trigger                    = "ADC_TRIGGER_EPWM2_SOCA";
+adc1.soc0SampleWindow               = 8;
+adc1.interruptPulseMode             = "ADC_PULSE_END_OF_CONV";
+adc1.enabledInts                    = ["ADC_INT_NUMBER1"];
+adc1.enableInterrupt1               = true;
+adc1.enableInterrupt1ContinuousMode = true;
+
+led1.$name     = "myBoardLED0";
+led1.$hardware = system.deviceData.board.components.D2;
+
+cla1.$name              = "myCLA0";
+cla1.enable_CLA_TASK_2  = false;
+cla1.enable_CLA_TASK_3  = false;
+cla1.enable_CLA_TASK_4  = false;
+cla1.enable_CLA_TASK_5  = false;
+cla1.enable_CLA_TASK_6  = false;
+cla1.enable_CLA_TASK_7  = false;
+cla1.cpuint_CLA_TASK_2  = false;
+cla1.cpuint_CLA_TASK_3  = false;
+cla1.cpuint_CLA_TASK_4  = false;
+cla1.cpuint_CLA_TASK_5  = false;
+cla1.cpuint_CLA_TASK_6  = false;
+cla1.cpuint_CLA_TASK_7  = false;
+cla1.trigger_CLA_TASK_1 = "CLA_TRIGGER_ADCA1";
+cla1.cpuint_CLA_TASK_8  = false;
+
+epwm1.$name                                                      = "myEPWM0";
+epwm1.epwmTimebase_period                                        = 50000;
+epwm1.epwmCounterCompare_cmpA                                    = 25000;
+epwm1.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_1";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_shadowMode            = true;
+epwm1.epwmTimebase_counterMode                                   = "EPWM_COUNTER_MODE_UP_DOWN";
+epwm1.epwmCounterCompare_shadowLoadModeCMPA                      = "EPWM_COMP_LOAD_ON_CNTR_PERIOD";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_shadowEvent           = "EPWM_AQ_LOAD_ON_CNTR_PERIOD";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm1.epwm.$assign                                               = "EPWM1";
+epwm1.epwm.epwmaPin.$assign                                      = "hsecDigital.49";
+epwm1.epwm.epwmbPin.$assign                                      = "hsecDigital.51";
+
+epwm2.$name                                             = "myEPWM1";
+epwm2.epwmTimebase_period                               = 12499;
+epwm2.epwmTimebase_hsClockDiv                           = "EPWM_HSCLOCK_DIVIDER_1";
+epwm2.epwmEventTrigger_EPWM_SOC_A_triggerEnable         = true;
+epwm2.epwmEventTrigger_EPWM_SOC_A_triggerSource         = "EPWM_SOC_TBCTR_PERIOD";
+epwm2.epwmTimebase_counterMode                          = "EPWM_COUNTER_MODE_UP";
+epwm2.epwmEventTrigger_EPWM_SOC_A_triggerEventPrescalar = "1";
+epwm2.epwm.$assign                                      = "EPWM2";
+epwm2.epwm.epwmaPin.$assign                             = "hsecDigital.53";
+epwm2.epwm.epwmbPin.$assign                             = "hsecDigital.55";
+
+memcfg.config_MEMCFG_SECT_LS1 = "CLA_data";
+memcfg.config_MEMCFG_SECT_LS5 = "CLA_prog";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+led1.gpio.gpioPin.$suggestSolution = "hsecDigital.86";

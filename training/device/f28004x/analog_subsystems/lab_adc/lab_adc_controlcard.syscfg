@@ -1,0 +1,82 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --board "/boards/TMDSCNCD280049C" --product "C2000WARE@4.01.00.00"
+ * @versions {"tool":"1.11.0+2225"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const adc     = scripting.addModule("/driverlib/adc.js", {}, false);
+const adc1    = adc.addInstance();
+const asysctl = scripting.addModule("/driverlib/asysctl.js");
+const led     = scripting.addModule("/driverlib/board_components/led", {}, false);
+const led1    = led.addInstance();
+const dac     = scripting.addModule("/driverlib/dac.js", {}, false);
+const dac1    = dac.addInstance();
+const epwm    = scripting.addModule("/driverlib/epwm.js", {}, false);
+const epwm1   = epwm.addInstance();
+const gpio    = scripting.addModule("/driverlib/gpio.js", {}, false);
+const gpio1   = gpio.addInstance();
+const gpio2   = gpio.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+adc1.$name                   = "myADCA";
+adc1.adcClockPrescaler       = "ADC_CLK_DIV_4_0";
+adc1.enabledSOCs             = ["ADC_SOC_NUMBER0"];
+adc1.soc0Trigger             = "ADC_TRIGGER_EPWM1_SOCA";
+adc1.soc0SampleWindow        = 20;
+adc1.interruptPulseMode      = "ADC_PULSE_END_OF_CONV";
+adc1.enabledInts             = ["ADC_INT_NUMBER1"];
+adc1.enableInterrupt1        = true;
+adc1.registerInterrupts      = ["1"];
+adc1.adcInt1.enableInterrupt = true;
+
+asysctl.analogReference        = "INTERNAL";
+asysctl.analogReferenceVoltage = "1P65";
+
+led1.$name     = "myBoardLED0";
+led1.$hardware = system.deviceData.board.components.D2;
+
+dac1.dacBase          = "DACB_BASE";
+dac1.$name            = "myDACB";
+dac1.referenceVoltage = "DAC_REF_ADC_VREFHI";
+dac1.gainMode         = "DAC_GAIN_TWO";
+dac1.shadowValue      = 800;
+dac1.enableOutput     = true;
+
+epwm1.epwmTimebase_hsClockDiv                           = "EPWM_HSCLOCK_DIVIDER_1";
+epwm1.epwmTimebase_period                               = 1999;
+epwm1.epwmTimebase_counterMode                          = "EPWM_COUNTER_MODE_UP";
+epwm1.epwmEventTrigger_enableInterrupt                  = true;
+epwm1.epwmEventTrigger_EPWM_SOC_A_triggerEnable         = true;
+epwm1.epwmEventTrigger_EPWM_SOC_A_triggerSource         = "EPWM_SOC_TBCTR_PERIOD";
+epwm1.epwmEventTrigger_EPWM_SOC_A_triggerEventPrescalar = "1";
+epwm1.$name                                             = "myEPWM1";
+epwm1.epwm.$assign                                      = "EPWM1";
+epwm1.epwm.epwm_aPin.$assign                            = "hsecDigital.49";
+epwm1.epwm.epwm_bPin.$assign                            = "hsecDigital.51";
+
+gpio1.$name             = "myGPIOHigh";
+gpio1.direction         = "GPIO_DIR_MODE_OUT";
+gpio1.padConfig         = "PULLUP";
+gpio1.writeInitialValue = true;
+gpio1.initialValue      = 1;
+gpio1.gpioPin.$assign   = "hsecDigital.67";
+
+gpio2.$name             = "myGPIOToggle";
+gpio2.writeInitialValue = true;
+gpio2.direction         = "GPIO_DIR_MODE_OUT";
+gpio2.padConfig         = "PULLUP";
+gpio2.initialValue      = 1;
+gpio2.gpioPin.$assign   = "hsecDigital.55";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+led1.gpio.gpioPin.$suggestSolution = "hsecDigital.86";

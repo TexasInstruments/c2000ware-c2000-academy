@@ -1,0 +1,129 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --board "/boards/LAUNCHXL_F2800137" --context "system" --product "C2000WARE@4.02.00.00"
+ * @versions {"tool":"1.14.0+2667"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const adc              = scripting.addModule("/driverlib/adc.js", {}, false);
+const adc1             = adc.addInstance();
+const analog           = scripting.addModule("/driverlib/analog.js", {}, false);
+const analog1          = analog.addInstance();
+const asysctl          = scripting.addModule("/driverlib/asysctl.js");
+const led              = scripting.addModule("/driverlib/board_components/led", {}, false);
+const led1             = led.addInstance();
+const ecap             = scripting.addModule("/driverlib/ecap.js", {}, false);
+const ecap1            = ecap.addInstance();
+const epwm             = scripting.addModule("/driverlib/epwm.js", {}, false);
+const epwm1            = epwm.addInstance();
+const epwm2            = epwm.addInstance();
+const inputxbar        = scripting.addModule("/driverlib/inputxbar.js", {}, false);
+const inputxbar1       = inputxbar.addInstance();
+const inputxbar_input  = scripting.addModule("/driverlib/inputxbar_input.js");
+const inputxbar_input1 = inputxbar_input.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+adc1.$name                          = "myADC0";
+adc1.adcClockPrescaler              = "ADC_CLK_DIV_4_0";
+adc1.enabledSOCs                    = ["ADC_SOC_NUMBER0"];
+adc1.enabledInts                    = ["ADC_INT_NUMBER1"];
+adc1.enableInterrupt1               = true;
+adc1.enableInterrupt1ContinuousMode = true;
+adc1.registerInterrupts             = ["1"];
+adc1.soc0Trigger                    = "ADC_TRIGGER_EPWM2_SOCA";
+adc1.soc0SampleWindow               = 8;
+adc1.interruptPulseMode             = "ADC_PULSE_END_OF_CONV";
+adc1.adcInt1.interruptHandler       = "adcA1ISR";
+adc1.adcInt1.enableInterrupt        = true;
+
+analog1.$name                                = "myANALOGPinMux0";
+adc1.analog                                  = analog1;
+analog1.analog["a16/c16, gpio28Pin"].$assign = "boosterpack1.3";
+analog1.analog["a17/c17, gpio20Pin"].$assign = "boosterpack2.53";
+analog1.analog["a19/c19, gpio13Pin"].$assign = "boosterpack2.79";
+analog1.analog["a20/c20, gpio12Pin"].$assign = "boosterpack2.80";
+analog1.analog["a8/c11Pin"].$assign          = "boosterpack2.65";
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to SCIA XDS on the LaunchPad F2800137\\. Consider selecting it in 'use hardware' above\\. @@@.+?@@@", analog1.analog, "a16/c16, gpio28Pin");
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to LED4 \\(User LEDs\\) on the LaunchPad F2800137\\. Consider selecting it in 'use hardware' above\\. @@@.+?@@@", analog1.analog, "a17/c17, gpio20Pin");
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to EPWM7 BP on the LaunchPad F2800137\\. Consider selecting it in 'use hardware' above\\. @@@.+?@@@", analog1.analog, "a19/c19, gpio13Pin");
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to EPWM7 BP on the LaunchPad F2800137\\. Consider selecting it in 'use hardware' above\\. @@@.+?@@@", analog1.analog, "a20/c20, gpio12Pin");
+
+asysctl.analogReference = "INTERNAL";
+
+led1.$name     = "myBoardLED0";
+led1.$hardware = system.deviceData.board.components.LED5;
+
+ecap1.$name                    = "myECAP0";
+ecap1.eventStop                = "ECAP_EVENT_4";
+ecap1.eventTwoPolarity         = "ECAP_EVNT_FALLING_EDGE";
+ecap1.eventFourPolarity        = "ECAP_EVNT_FALLING_EDGE";
+ecap1.registerInterrupts       = true;
+ecap1.enableInterrupt          = true;
+ecap1.interruptSourceCapture   = ["ECAP_ISR_SOURCE_CAPTURE_EVENT_3"];
+ecap1.ecapInput                = "ECAP_INPUT_INPUTXBAR7";
+ecap1.ecapInt.interruptHandler = "ecap1ISR";
+ecap1.ecapInt.enableInterrupt  = true;
+
+epwm1.$name                                                      = "myEPWM0";
+epwm1.epwmTimebase_counterMode                                   = "EPWM_COUNTER_MODE_UP_DOWN";
+epwm1.epwmCounterCompare_cmpA                                    = 18750;
+epwm1.epwmTimebase_period                                        = 25000;
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_shadowMode            = true;
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm1.epwm.$assign                                               = "EPWM1";
+epwm1.epwm.epwm_aPin.$assign                                     = "boosterpack1.40";
+epwm1.epwm.epwm_bPin.$assign                                     = "boosterpack1.39";
+epwm1.aQual.$name                                                = "myGPIOQUAL0";
+epwm1.bQual.$name                                                = "myGPIOQUAL1";
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to EPWM1 BP on the LaunchPad F2800137\\. Consider selecting it in 'use hardware' above\\. @@@.+?@@@", epwm1.epwm, "epwm_aPin");
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to EPWM1 BP on the LaunchPad F2800137\\. Consider selecting it in 'use hardware' above\\. @@@.+?@@@", epwm1.epwm, "epwm_bPin");
+
+epwm2.$name                                             = "myEPWM2";
+epwm2.epwmTimebase_period                               = 1999;
+epwm2.epwmTimebase_counterMode                          = "EPWM_COUNTER_MODE_UP";
+epwm2.epwmEventTrigger_EPWM_SOC_A_triggerEnable         = true;
+epwm2.epwmEventTrigger_EPWM_SOC_A_triggerSource         = "EPWM_SOC_TBCTR_PERIOD";
+epwm2.epwmEventTrigger_EPWM_SOC_A_triggerEventPrescalar = "1";
+epwm2.epwm.$assign                                      = "EPWM2";
+epwm2.epwm.epwm_aPin.$assign                            = "boosterpack1.38";
+epwm2.epwm.epwm_bPin.$assign                            = "boosterpack1.37";
+epwm2.aQual.$name                                       = "myGPIOQUAL2";
+epwm2.bQual.$name                                       = "myGPIOQUAL3";
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to EPWM2 BP on the LaunchPad F2800137\\. Consider selecting it in 'use hardware' above\\. @@@.+?@@@", epwm2.epwm, "epwm_aPin");
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to EPWM2 BP on the LaunchPad F2800137\\. Consider selecting it in 'use hardware' above\\. @@@.+?@@@", epwm2.epwm, "epwm_bPin");
+
+inputxbar1.$name = "myINPUTXBAR0";
+
+inputxbar_input1.$name          = "myINPUTXBARINPUT0";
+inputxbar_input1.inputxbarInput = "XBAR_INPUT7";
+inputxbar_input1.inputxbarGpio  = "GPIO0";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+analog1.analog.$suggestSolution                        = "ANALOG";
+analog1.analog["a0/c15/cmp1_daclPin"].$suggestSolution = "boosterpack2.69";
+analog1.analog.a1Pin.$suggestSolution                  = "boosterpack2.42";
+analog1.analog["a10/c10, gpio230Pin"].$suggestSolution = "boosterpack2.68";
+analog1.analog["a11/c0Pin"].$suggestSolution           = "boosterpack1.28";
+analog1.analog["a12/c1Pin"].$suggestSolution           = "boosterpack1.29";
+analog1.analog["a15/c7Pin"].$suggestSolution           = "boosterpack1.26";
+analog1.analog["a18/c18, gpio21Pin"].$suggestSolution  = "boosterpack2.74";
+analog1.analog["a2/c9, gpio224Pin"].$suggestSolution   = "boosterpack1.25";
+analog1.analog["a3/c5, gpio242Pin"].$suggestSolution   = "boosterpack1.24";
+analog1.analog["a4/c14Pin"].$suggestSolution           = "boosterpack2.66";
+analog1.analog["a5/c2Pin"].$suggestSolution            = "boosterpack2.63";
+analog1.analog["a6, gpio228Pin"].$suggestSolution      = "boosterpack1.23";
+analog1.analog["a7/c3Pin"].$suggestSolution            = "boosterpack2.64";
+analog1.analog["c4/a14Pin"].$suggestSolution           = "boosterpack1.27";
+analog1.analog["c6, gpio226Pin"].$suggestSolution      = "boosterpack1.2";
+analog1.analog["c8/a9, gpio227Pin"].$suggestSolution   = "boosterpack2.67";
+led1.gpio.gpioPin.$suggestSolution                     = "boosterpack1.12";

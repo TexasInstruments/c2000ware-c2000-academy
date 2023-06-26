@@ -1,0 +1,116 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --board "/boards/TMDSCNCD280039C" --product "C2000WARE@4.01.00.00"
+ * @versions {"tool":"1.11.0+2225"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const adc       = scripting.addModule("/driverlib/adc.js", {}, false);
+const adc1      = adc.addInstance();
+const asysctl   = scripting.addModule("/driverlib/asysctl.js");
+const led       = scripting.addModule("/driverlib/board_components/led", {}, false);
+const led1      = led.addInstance();
+const cmpss     = scripting.addModule("/driverlib/cmpss.js", {}, false);
+const cmpss1    = cmpss.addInstance();
+const dac       = scripting.addModule("/driverlib/dac.js", {}, false);
+const dac1      = dac.addInstance();
+const epwm      = scripting.addModule("/driverlib/epwm.js", {}, false);
+const epwm1     = epwm.addInstance();
+const epwmxbar  = scripting.addModule("/driverlib/epwmxbar.js", {}, false);
+const epwmxbar1 = epwmxbar.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+adc1.adcClockPrescaler       = "ADC_CLK_DIV_4_0";
+adc1.interruptPulseMode      = "ADC_PULSE_END_OF_CONV";
+adc1.registerInterrupts      = ["1"];
+adc1.enabledInts             = ["ADC_INT_NUMBER1"];
+adc1.enableInterrupt1        = true;
+adc1.enabledSOCs             = ["ADC_SOC_NUMBER0"];
+adc1.soc0Channel             = "ADC_CH_ADCIN4";
+adc1.soc0Trigger             = "ADC_TRIGGER_EPWM1_SOCA";
+adc1.soc0InterruptTrigger    = "ADC_INT_SOC_TRIGGER_ADCINT1";
+adc1.soc0SampleWindow        = 15;
+adc1.$name                   = "myADCA";
+adc1.adcInt1.enableInterrupt = true;
+
+asysctl.analogReference        = "INTERNAL";
+asysctl.analogReferenceVoltage = "1P65";
+
+led1.$name     = "myBoardLED0";
+led1.$hardware = system.deviceData.board.components.D2;
+
+cmpss1.enableModule = true;
+cmpss1.cmpssBase    = "CMPSS2_BASE";
+cmpss1.$name        = "myCMPSS";
+cmpss1.dacValHigh   = 2500;
+
+dac1.$name            = "myDACA";
+dac1.referenceVoltage = "DAC_REF_ADC_VREFHI";
+dac1.enableOutput     = true;
+dac1.gainMode         = "DAC_GAIN_TWO";
+
+const analog  = scripting.addModule("/driverlib/analog.js", {}, false);
+const analog1 = analog.addInstance({}, false);
+analog1.$name = "myANALOGPinMux0";
+adc1.analog   = analog1;
+cmpss1.analog = analog1;
+dac1.analog   = analog1;
+
+epwm1.$name                                                      = "myEPWM1";
+epwm1.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_1";
+epwm1.epwmTimebase_counterMode                                   = "EPWM_COUNTER_MODE_UP_DOWN";
+epwm1.epwmTimebase_period                                        = 1000;
+epwm1.epwmCounterCompare_cmpA                                    = 500;
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm1.epwmDigitalCompare_EPWM_DC_TYPE_DCAH                       = "EPWM_DC_TRIP_TRIPIN4";
+epwm1.epwmDigitalCompare_EPWM_TZ_DC_OUTPUT_A1                    = "EPWM_TZ_EVENT_DCXH_HIGH";
+epwm1.epwmTripZone_EPWM_TZ_ACTION_EVENT_TZA                      = "EPWM_TZ_ACTION_LOW";
+epwm1.epwmTripZone_oneShotSource                                 = ["EPWM_TZ_SIGNAL_DCAEVT1"];
+epwm1.epwmEventTrigger_EPWM_SOC_A_triggerEnable                  = true;
+epwm1.epwmEventTrigger_EPWM_SOC_A_triggerSource                  = "EPWM_SOC_TBCTR_U_CMPA";
+epwm1.epwmEventTrigger_EPWM_SOC_A_triggerEventPrescalar          = "1";
+epwm1.epwm.$assign                                               = "EPWM1";
+epwm1.epwm.epwm_aPin.$assign                                     = "hsecDigital.49";
+epwm1.epwm.epwm_bPin.$assign                                     = "hsecDigital.51";
+
+epwmxbar1.$name     = "myEPWMXBAR4";
+epwmxbar1.muxesUsed = ["XBAR_MUX02"];
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+led1.gpio.gpioPin.$suggestSolution                        = "hsecDigital.86";
+analog1.analog.$suggestSolution                           = "ANALOG";
+analog1.analog["a0/b15/c15/daca_outPin"].$suggestSolution = "hsecAnalog.9";
+analog1.analog["a1/b7/dacb_outPin"].$suggestSolution      = "hsecAnalog.11";
+analog1.analog["a10/b1/c10Pin"].$suggestSolution          = "hsecAnalog.25";
+analog1.analog["a11/b10/c0Pin"].$suggestSolution          = "hsecAnalog.27";
+analog1.analog["a12, c5Pin"].$suggestSolution             = "hsecAnalog.37";
+analog1.analog["a14/b14/c4Pin"].$suggestSolution          = "hsecAnalog.36";
+analog1.analog["a2/b6/c9Pin"].$suggestSolution            = "hsecAnalog.15";
+analog1.analog["a3, c7/b9Pin"].$suggestSolution           = "hsecAnalog.39";
+analog1.analog["a4/b8Pin"].$suggestSolution               = "hsecAnalog.17";
+analog1.analog.a5Pin.$suggestSolution                     = "hsecAnalog.21";
+analog1.analog.a6Pin.$suggestSolution                     = "hsecAnalog.23";
+analog1.analog.a8Pin.$suggestSolution                     = "hsecAnalog.30";
+analog1.analog.a9Pin.$suggestSolution                     = "hsecAnalog.34";
+analog1.analog["b0/c11Pin"].$suggestSolution              = "hsecAnalog.31";
+analog1.analog.b11Pin.$suggestSolution                    = "hsecAnalog.24";
+analog1.analog["b11, gpio21Pin"].$suggestSolution         = "hsecDigital.70";
+analog1.analog["b2/c6Pin"].$suggestSolution               = "hsecAnalog.14";
+analog1.analog["b3/vdacPin"].$suggestSolution             = "hsecAnalog.12";
+analog1.analog["b4/c8Pin"].$suggestSolution               = "hsecAnalog.20";
+analog1.analog.b5Pin.$suggestSolution                     = "hsecAnalog.26";
+analog1.analog["b5, gpio20Pin"].$suggestSolution          = "hsecDigital.68";
+analog1.analog.c1Pin.$suggestSolution                     = "hsecAnalog.28";
+analog1.analog.c14Pin.$suggestSolution                    = "hsecAnalog.40";
+analog1.analog["c2/b12Pin"].$suggestSolution              = "hsecAnalog.18";
+analog1.analog["c3/a7Pin"].$suggestSolution               = "hsecAnalog.33";

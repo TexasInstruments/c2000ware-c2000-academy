@@ -1,0 +1,31 @@
+<projectSpec>
+  <project
+        name="lab_cla_cc_f2837xd"
+        device="TMS320F28379D"
+        cgtVersion="22.6.0.LTS"
+        products="c2000ware_software_package"
+        outputFormat="ELF"
+        launchWizard="False"
+        linkerCommandFile=""
+        enableSysConfigTool="true"
+        sysConfigBuildOptions="--product ${C2000WARE_ROOT}/.metadata/sdk.json --board /boards/TMDSCNCD28379D"
+        >
+    <configuration name="CPU1_RAM" compilerBuildOptions="--opt_level=off --cla_support=cla2 --cla_background_task=off --cla_signed_compare_workaround=on --float_support=fpu32 --tmu_support=tmu0 --vcu_support=vcu0 -I${PROJECT_ROOT}/device -I${PROJECT_ROOT}/device/include -I${C2000WARE_DLIB_ROOT}  -v28 -ml -mt --define=CPU1 --define=DEBUG --diag_warning=225  --diag_suppress=10063 --display_error_number --define=_DUAL_CORE_ --define=F2837XD_DEVICE" linkerBuildOptions="--entry_point code_start --stack_size=0x3F8 --heap_size=0x200 --define=RAM --define=CLA_C"/>
+    <configuration name="CPU1_FLASH" compilerBuildOptions="--opt_level=off --cla_support=cla2 --cla_background_task=off --cla_signed_compare_workaround=on --float_support=fpu32 --tmu_support=tmu0 --vcu_support=vcu0 -I${PROJECT_ROOT}/device -I${PROJECT_ROOT}/device/include -I${C2000WARE_DLIB_ROOT}  -v28 -ml -mt --define=CPU1 --define=DEBUG --define=_FLASH  --define=CLA_C --diag_warning=225  --diag_suppress=10063 --display_error_number --define=_DUAL_CORE_ --define=F2837XD_DEVICE" linkerBuildOptions="--entry_point code_start --stack_size=0x3F8 --heap_size=0x200 --define=CLA_C"  />
+    <pathVariable name="C2000WARE_DLIB_ROOT" path="../../../../driverlib/f2837xd/driverlib/" scope="project"/>
+    <pathVariable name="C2000WARE_ROOT" path="../../../../" scope="project" />
+    <file action="copy" path="../../../../device_support/f2837xd/common/include/driverlib.h" targetDirectory="device"/>
+    <file action="copy" path="../../../../device_support/f2837xd/common/include/device.h" targetDirectory="device"/>
+    <file action="copy" path="../../../../device_support/f2837xd/common/source/device.c" targetDirectory="device"/>
+    <file action="copy" path="../../../../device_support/f2837xd/common/source/F2837xD_CodeStartBranch.asm" targetDirectory="device"/>
+    <file action="copy" path="../../../../device_support/f2837xd/common/targetConfigs/TMS320F28379D.ccxml" targetDirectory="targetConfigs"  applicableConfigurations="CPU1_RAM,CPU1_FLASH" />
+    <file action="link" path="../../../../driverlib/f2837xd/driverlib/ccs/Debug/driverlib.lib" targetDirectory=""/>
+    <file action="copy" path="../../../../driverlib/f2837xd/driverlib/" targetDirectory="device" excludeFromBuild="True"/>
+    <file action="copy" path="lab_main.c" targetDirectory="" />
+    <file action="copy" path="lab_cla_tasks.cla" targetDirectory="" />
+    <file action="copy" path="lab_shared.h" targetDirectory="" />
+    <file action="copy" path="lab_f2837xd_controlcard.syscfg" targetDirectory="" />
+    <file action="copy" path="2837xD_RAM_CLA_lnk_cpu1.cmd" targetDirectory="" applicableConfigurations="CPU1_RAM" />
+    <file action="copy" path="2837xD_FLASH_CLA_lnk_cpu1.cmd" targetDirectory="" applicableConfigurations="CPU1_FLASH" />
+  </project>
+</projectSpec>

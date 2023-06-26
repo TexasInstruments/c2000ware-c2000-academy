@@ -1,0 +1,65 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --board "/boards/LAUNCHXL_F2800137" --context "system" --product "C2000WARE@4.02.00.00"
+ * @versions {"tool":"1.14.0+2667"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const led   = scripting.addModule("/driverlib/board_components/led", {}, false);
+const led1  = led.addInstance();
+const epwm  = scripting.addModule("/driverlib/epwm.js", {}, false);
+const epwm1 = epwm.addInstance();
+const eqep  = scripting.addModule("/driverlib/eqep.js", {}, false);
+const eqep1 = eqep.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+led1.$name     = "myBoardLED0";
+led1.$hardware = system.deviceData.board.components.LED5;
+
+epwm1.$name                                                      = "myEPWM0";
+epwm1.$hardware                                                  = system.deviceData.board.components.BP_SITE_1.subComponents.PWM_LOC1;
+epwm1.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_1";
+epwm1.epwmTimebase_period                                        = 24000;
+epwm1.epwmTimebase_counterMode                                   = "EPWM_COUNTER_MODE_UP_DOWN";
+epwm1.epwmCounterCompare_cmpA                                    = 12000;
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_PERIOD    = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_ZERO      = "EPWM_AQ_OUTPUT_LOW";
+
+eqep1.$name                       = "myEQEP1";
+eqep1.registerInterrupts          = true;
+eqep1.enableInterrupt             = true;
+eqep1.interruptSources            = ["EQEP_INT_UNIT_TIME_OUT"];
+eqep1.enableUnitTimer             = true;
+eqep1.unitTimerPeriod             = 1200000;
+eqep1.positionCounterMax          = 3999;
+eqep1.latchPositionCounter        = "EQEP_LATCH_UNIT_TIME_OUT";
+eqep1.positionIndexEvents         = "EQEP_INIT_RISING_INDEX";
+eqep1.enableModule                = true;
+eqep1.eqepResolution              = "EQEP_CONFIG_1X_RESOLUTION";
+eqep1.eqep.eqep_aPin.$assign      = "boosterpack2.71";
+eqep1.eqep.eqep_bPin.$assign      = "boosterpack2.72";
+eqep1.eqep.eqep_strobePin.$assign = "boosterpack1.15";
+eqep1.eqep.eqep_indexPin.$assign  = "boosterpack1.17";
+eqep1.eqepInt.enableInterrupt     = true;
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to EQEP1 Header on the LaunchPad F2800137\\. Consider selecting it in 'use hardware' above\\. @@@.+?@@@", eqep1.eqep, "eqep_aPin");
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to EQEP1 Header on the LaunchPad F2800137\\. Consider selecting it in 'use hardware' above\\. @@@.+?@@@", eqep1.eqep, "eqep_bPin");
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to SPIA BP on the LaunchPad F2800137\\. Consider selecting it in 'use hardware' above\\. @@@.+?@@@", eqep1.eqep, "eqep_strobePin");
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to EQEP1 Header on the LaunchPad F2800137\\. Consider selecting it in 'use hardware' above\\. @@@.+?@@@", eqep1.eqep, "eqep_indexPin");
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+led1.gpio.gpioPin.$suggestSolution    = "boosterpack1.12";
+epwm1.epwm.$suggestSolution           = "EPWM1";
+epwm1.epwm.epwm_aPin.$suggestSolution = "boosterpack1.40";
+epwm1.epwm.epwm_bPin.$suggestSolution = "boosterpack1.39";
+eqep1.eqep.$suggestSolution           = "EQEP1";

@@ -1,0 +1,90 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F2838x" --package "337bga" --part "F2838x_337bga" --context "CPU1" --product "C2000WARE@4.03.00.00"
+ * @versions {"tool":"1.15.999+71"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const adc   = scripting.addModule("/driverlib/adc.js", {}, false);
+const adc1  = adc.addInstance();
+const dac   = scripting.addModule("/driverlib/dac.js", {}, false);
+const dac1  = dac.addInstance();
+const epwm  = scripting.addModule("/driverlib/epwm.js", {}, false);
+const epwm1 = epwm.addInstance();
+const gpio  = scripting.addModule("/driverlib/gpio.js", {}, false);
+const gpio1 = gpio.addInstance();
+const gpio2 = gpio.addInstance();
+const ipc   = scripting.addModule("/driverlib/ipc.js");
+const CMD   = scripting.addModule("/utilities/cmd_tool/cmd_syscfg/source/CMD");
+const CMD1  = CMD.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+adc1.$name                          = "myADC0";
+adc1.adcClockPrescaler              = "ADC_CLK_DIV_4_0";
+adc1.enabledSOCs                    = ["ADC_SOC_NUMBER0"];
+adc1.soc0SampleWindow               = 8;
+adc1.enabledInts                    = ["ADC_INT_NUMBER1"];
+adc1.enableInterrupt1               = true;
+adc1.enableInterrupt1ContinuousMode = true;
+adc1.registerInterrupts             = ["1"];
+adc1.interruptPulseMode             = "ADC_PULSE_END_OF_CONV";
+adc1.soc0Trigger                    = "ADC_TRIGGER_EPWM2_SOCA";
+adc1.adcInt1.interruptHandler       = "adcA1ISR";
+adc1.adcInt1.enableInterrupt        = true;
+
+dac1.$name            = "myDAC0";
+dac1.dacBase          = "DACB_BASE";
+dac1.referenceVoltage = "DAC_REF_ADC_VREFHI";
+dac1.enableOutput     = true;
+
+epwm1.$name                                             = "myEPWM0";
+epwm1.epwmTimebase_hsClockDiv                           = "EPWM_HSCLOCK_DIVIDER_1";
+epwm1.epwmTimebase_period                               = 1999;
+epwm1.epwmTimebase_counterMode                          = "EPWM_COUNTER_MODE_UP";
+epwm1.epwmTimebase_phaseEnable                          = true;
+epwm1.epwmEventTrigger_EPWM_SOC_A_triggerEnable         = true;
+epwm1.epwmEventTrigger_EPWM_SOC_A_triggerSource         = "EPWM_SOC_TBCTR_PERIOD";
+epwm1.epwmEventTrigger_EPWM_SOC_A_triggerEventPrescalar = "1";
+epwm1.epwm.$assign                                      = "EPWM2";
+epwm1.epwm.epwm_aPin.$assign                            = "GPIO2";
+epwm1.epwm.epwm_bPin.$assign                            = "GPIO3";
+
+gpio1.direction         = "GPIO_DIR_MODE_OUT";
+gpio1.writeInitialValue = true;
+gpio1.initialValue      = 1;
+gpio1.$name             = "CPU1_LED";
+gpio1.gpioPin.$assign   = "GPIO31";
+
+gpio2.direction         = "GPIO_DIR_MODE_OUT";
+gpio2.writeInitialValue = true;
+gpio2.controllerCore    = "GPIO_CORE_CPU2";
+gpio2.$name             = "CPU2_LED";
+gpio2.gpioPin.$assign   = "GPIO34";
+
+ipc.flagHandler31            = "IPC_SYNC";
+ipc.registerInterrupts       = ["1"];
+ipc.ipcRegisterFlag          = ["IPC_FLAG0","IPC_FLAG31"];
+ipc.enableInterrupt0         = true;
+ipc.ipcInt1.interruptHandler = "ipc1_ISR";
+ipc.ipcInt1.enableInterrupt  = true;
+
+CMD.activateCMD = true;
+
+CMD1.$name                    = "CMD0";
+CMD1.sectionMemory_text       = ["RAMD0","RAMD1","RAMLS0","RAMLS1","RAMLS2","RAMLS3"];
+CMD1.sectionMemory_ramfunc    = ["RAMM0"];
+CMD1.sectionMemory_cinit      = ["RAMM0"];
+CMD1.sectionMemory_init_array = ["RAMM0"];
+CMD1.sectionMemory_const      = ["RAMLS5"];
+CMD1.sectionMemory_switch     = ["RAMM0"];
+CMD1.sectionMemory_stack      = ["RAMM1"];
+CMD1.sectionMemory_bss        = ["RAMLS5"];
+CMD1.sectionMemory_data       = ["RAMLS5"];
+CMD1.sectionMemory_sysmem     = ["RAMLS5"];
+CMD1.sectionMemory_binit      = ["FLASH0"];
+CMD1.sectionAlignEnable_binit = true;

@@ -1,0 +1,29 @@
+<projectSpec>
+  <project
+        name="epwm_ecap_lp_f28004x"
+        device="TMS320F280049C"
+        cgtVersion="22.6.0.LTS"
+        products="c2000ware_software_package"
+        outputFormat="ELF"
+        launchWizard="False"
+        linkerCommandFile=""
+        enableSysConfigTool="true"
+        sysConfigBuildOptions="--product ${C2000WARE_ROOT}/.metadata/sdk.json --board /boards/LAUNCHXL_F280049C"
+        >
+    <configuration name="CPU1_RAM" compilerBuildOptions="--opt_level=off -I${C2000WARE_ROOT} -I${PROJECT_ROOT}/device -I${C2000WARE_DLIB_ROOT} -v28 -ml -mt --cla_support=cla2 --float_support=fpu32 --gen_func_subsections=on --define=DEBUG --define=RAM --define=_LAUNCHXL_F280049C --diag_warning=225 --diag_suppress=10063" linkerBuildOptions="--entry_point code_start --stack_size=0x200 --heap_size=0x100 --define=RAM -i${C2000WARE_ROOT} -i${PROJECT_BUILD_DIR}/syscfg "/>
+    <configuration name="CPU1_FLASH" compilerBuildOptions="--opt_level=off -I${C2000WARE_ROOT} -I${PROJECT_ROOT}/device -I${C2000WARE_DLIB_ROOT} -v28 -ml -mt --cla_support=cla2 --float_support=fpu32 --gen_func_subsections=on --define=DEBUG --define=_LAUNCHXL_F280049C --define=_FLASH --diag_warning=225 --diag_suppress=10063" linkerBuildOptions="--entry_point code_start --stack_size=0x200 --heap_size=0x100  --define=_FLASH -i${C2000WARE_ROOT} -i${PROJECT_BUILD_DIR}/syscfg "/>
+    <pathVariable name="C2000WARE_DLIB_ROOT" path="../../../../../driverlib/f28004x/driverlib" scope="project" />
+    <pathVariable name="C2000WARE_ROOT" path="../../../../../" scope="project" />
+    <file action="copy" path="../../../../../device_support/f28004x/common/include/driverlib.h" targetDirectory="device" />
+    <file action="copy" path="../../../../../device_support/f28004x/common/include/device.h" targetDirectory="device" />
+    <file action="copy" path="../../../../../device_support/f28004x/common/source/device.c" targetDirectory="device" />
+    <file action="copy" path="../../../../../device_support/f28004x/common/source/f28004x_codestartbranch.asm" targetDirectory="device" />
+    <file action="copy" path="../../../../../device_support/f28004x/common/targetConfigs/TMS320F280049C_LaunchPad.ccxml" targetDirectory="targetConfigs" applicableConfigurations="CPU1_RAM,CPU1_FLASH" />
+    <file action="link" path="../../../../../driverlib/f28004x/driverlib/ccs/Debug/driverlib.lib" targetDirectory="" />
+    <file action="copy" path="../../../../../driverlib/f28004x/driverlib/" targetDirectory="device" excludeFromBuild="True"/>
+    <file action="copy" path="../../../../src/control_peripherals/ePwm_eCap_lab/lab_main.c" targetDirectory="" />
+    <file action="copy" path="lab_ePwm_eCap_launchpad.syscfg" targetDirectory="" />
+    <file action="copy" path="28004x_generic_ram_lnk.cmd" targetDirectory="" applicableConfigurations="CPU1_RAM" />
+    <file action="copy" path="28004x_generic_flash_lnk.cmd" targetDirectory="" applicableConfigurations="CPU1_FLASH" />
+  </project>
+</projectSpec>

@@ -1,0 +1,66 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --board "/boards/TMDSCNCD280049C" --product "C2000WARE@4.01.00.00"
+ * @versions {"tool":"1.11.0+2225"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const led   = scripting.addModule("/driverlib/board_components/led", {}, false);
+const led1  = led.addInstance();
+const epwm  = scripting.addModule("/driverlib/epwm.js", {}, false);
+const epwm1 = epwm.addInstance();
+const eqep  = scripting.addModule("/driverlib/eqep.js", {}, false);
+const eqep1 = eqep.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+led1.$name     = "myBoardLED0";
+led1.$hardware = system.deviceData.board.components.D2;
+
+epwm1.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_1";
+epwm1.epwmTimebase_counterMode                                   = "EPWM_COUNTER_MODE_UP_DOWN";
+epwm1.epwmCounterCompare_cmpA                                    = 12000;
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_shadowMode            = true;
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_usedEvents            = ["EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPA","EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPA"];
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_shadowMode            = true;
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_usedEvents            = ["EPWM_AQ_OUTPUT_ON_TIMEBASE_PERIOD","EPWM_AQ_OUTPUT_ON_TIMEBASE_ZERO"];
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_ZERO      = "EPWM_AQ_OUTPUT_LOW";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_PERIOD    = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.$name                                                      = "myQuadraturePWM";
+epwm1.epwmTimebase_period                                        = 24000;
+epwm1.epwm.$assign                                               = "EPWM1";
+epwm1.epwm.epwm_aPin.$assign                                     = "hsecDigital.49";
+epwm1.epwm.epwm_bPin.$assign                                     = "hsecDigital.51";
+
+eqep1.$name                      = "myEQEP1";
+eqep1.eqepResolution             = "EQEP_CONFIG_1X_RESOLUTION";
+eqep1.latchPositionCounter       = "EQEP_LATCH_UNIT_TIME_OUT";
+eqep1.enableModule               = true;
+eqep1.registerInterrupts         = true;
+eqep1.enableInterrupt            = true;
+eqep1.interruptSources           = ["EQEP_INT_UNIT_TIME_OUT"];
+eqep1.emulationMode              = "EQEP_EMULATIONMODE_RUNFREE";
+eqep1.enableUnitTimer            = true;
+eqep1.positionCounterMax         = 3999;
+eqep1.positionIndexEvents        = "EQEP_INIT_RISING_INDEX";
+eqep1.unitTimerPeriod            = 1200000;
+eqep1.eqep.$assign               = "EQEP1";
+eqep1.eqep.eqep_aPin.$assign     = "hsecDigital.68";
+eqep1.eqep.eqep_bPin.$assign     = "hsecDigital.70";
+eqep1.eqep.eqep_indexPin.$assign = "hsecDigital.74";
+eqep1.eqepInt.enableInterrupt    = true;
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to D1 \(User LEDs\) on the Control Card F280049C\. Consider selecting it in 'use hardware' above\. @@@.+?@@@", eqep1.eqep, "eqep_indexPin");
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+led1.gpio.gpioPin.$suggestSolution         = "hsecDigital.86";
+eqep1.eqep.eqep_strobePin.$suggestSolution = "hsecDigital.57";
