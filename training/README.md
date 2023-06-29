@@ -3,7 +3,7 @@
 <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/TexasInstruments-Logo.svg" width="150"><br/>
 # c2000ware-c2000-academy
 
-[Introduction](#introduction) | [Layout](#repositorylayout) | [Overview](#overview) | [Contribute](#contributing-to-the-project)
+[Introduction](#introduction) | [Layout](#repositorylayout) | [Note](#note) | [Contribute](#contributing-to-the-project)
 
 </div>
 
@@ -27,7 +27,7 @@ List of devices supported
   -  device : This folder contains all solutions for C2000 Academy. Device specific solutions are located in the directory: /training/device/<device_name>.
   -  src : This folder contains source code for all solutions which is common across devices.
   
-## Overview
+## Note
 
 	This repository has a dependency on [c2000ware-core-sdk] (https://github.com/TexasInstruments/c2000ware-core-sdk) repository. 
 	Please clone the c2000ware-core-sdk repo and then clone this repo. 
