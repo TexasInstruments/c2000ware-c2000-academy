@@ -29,9 +29,9 @@ List of devices supported
   
 ## Note
 
-	This repository has a dependency on [c2000ware-core-sdk] (https://github.com/TexasInstruments/c2000ware-core-sdk) repository. 
-	Please clone the c2000ware-core-sdk repo and then clone this repo. 
-	The contents of this repo (training) folder has to be copied into the c2000ware-core-sdk repo.
+ This repository has a dependency on [c2000ware-core-sdk] (https://github.com/TexasInstruments/c2000ware-core-sdk) repository. 
+ Please clone the c2000ware-core-sdk repo and then clone this repo. 
+ The contents of this repo (training) folder has to be copied into the c2000ware-core-sdk repo.
 	
 ## Contributing to the project
 
