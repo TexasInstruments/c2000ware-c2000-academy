@@ -1,0 +1,62 @@
+<projectSpec>
+  <project
+        name="lab_ipc_sysconfig_launchpad_multi"
+        configurations="
+	    RAM
+        "
+        device="Generic C28xx Device"
+        outputType="system"
+        cgtVersion="20.2.1.LTS"
+        >
+        <pathVariable name="C2000WARE_ROOT" path="../../../../../" scope="project" />
+        <file path="system/system_lp/system.xml" action="copy" openOnCreation="true"/>
+        <configuration name="RAM"
+        ></configuration>
+  </project>
+  <project
+        name="lab_ipc_sysconfig_launchpad_core1"
+        device="Generic C28xx Device"
+        cgtVersion="20.2.1.LTS"
+        outputFormat="ELF"
+        launchWizard="False"
+        linkerCommandFile=""
+	enableSysConfigTool="true"
+	sysConfigBuildOptions="--product ${C2000WARE_ROOT}/.metadata/sdk.json"
+        >
+    <configuration name="RAM" compilerBuildOptions="--opt_level=off -I${C2000WARE_ROOT} -I${PROJECT_ROOT}/device -I${C2000WARE_DLIB_ROOT} --define=CPU1 -v28 -ml -mt --cla_support=cla1 --float_support=fpu32 --tmu_support=tmu0 --define=_LAUNCHXL_F28P65X --vcu_support=vcu2 --diag_warning=225  --diag_suppress=10063 --display_error_number" linkerBuildOptions="--entry_point code_start --stack_size=0x100" />                
+    <pathVariable name="C2000WARE_ROOT" path="../../../../../" scope="project" />
+    <pathVariable name="C2000WARE_DLIB_ROOT" path="../../../../../driverlib/f28p65x/driverlib" scope="project" />        
+    <file action="copy" path="../../../../../device_support/f28p65x/common/include/driverlib.h" targetDirectory="device" />
+    <file action="copy" path="../../../../../device_support/f28p65x/common/include/device.h" targetDirectory="device" />
+    <file action="copy" path="../../../../../device_support/f28p65x/common/source/device.c" targetDirectory="device" />
+    <file action="copy" path="../../../../../device_support/f28p65x/common/targetConfigs/TMS320F28P650DK9.ccxml" targetDirectory="targetConfigs" />
+    <file action="copy" path="../../../../../device_support/f28p65x/common/source/f28p65x_codestartbranch.asm" targetDirectory="device" />
+    <file action="link" path="../../../../../driverlib/f28p65x/driverlib/ccs/Debug/driverlib.lib" targetDirectory="" />
+    <file action="copy" path="../../../../../driverlib/f28p65x/driverlib/" targetDirectory="device" excludeFromBuild="True"/>
+    <file action="copy" path="../../../../src/advance_topics/ipc_lab/lab_main_sysconfig_cpu1.c" targetDirectory="" />
+    <file action="copy" path="lab_ipc_sysconfig_launchpad_RAM_cpu1.syscfg" targetDirectory="" applicableConfigurations="RAM"/>
+  </project>
+  <project
+        name="lab_ipc_sysconfig_launchpad_core2"
+        device="Generic C28xx Device"
+        cgtVersion="20.2.1.LTS"
+        outputFormat="ELF"
+        launchWizard="False"
+        linkerCommandFile=""
+	enableSysConfigTool="true"
+	sysConfigBuildOptions="--product ${C2000WARE_ROOT}/.metadata/sdk.json"
+        >
+    <configuration name="RAM" compilerBuildOptions="--opt_level=off -I${C2000WARE_ROOT} -I${PROJECT_ROOT}/device -I${C2000WARE_DLIB_ROOT} --define=CPU2 -v28 -ml -mt --cla_support=cla1 --float_support=fpu32 --tmu_support=tmu0 --define=_LAUNCHXL_F28P65X --vcu_support=vcu2 --diag_warning=225  --diag_suppress=10063 --display_error_number" linkerBuildOptions="--entry_point code_start --stack_size=0x100" />                  
+    <pathVariable name="C2000WARE_ROOT" path="../../../../../" scope="project" />
+    <pathVariable name="C2000WARE_DLIB_ROOT" path="../../../../../driverlib/f28p65x/driverlib" scope="project" />        
+    <file action="copy" path="../../../../../device_support/f28p65x/common/include/driverlib.h" targetDirectory="device" />
+    <file action="copy" path="../../../../../device_support/f28p65x/common/include/device.h" targetDirectory="device" />
+    <file action="copy" path="../../../../../device_support/f28p65x/common/source/device.c" targetDirectory="device" />
+    <file action="copy" path="../../../../../device_support/f28p65x/common/targetConfigs/TMS320F28P650DK9.ccxml" targetDirectory="targetConfigs" />
+    <file action="copy" path="../../../../../device_support/f28p65x/common/source/f28p65x_codestartbranch.asm" targetDirectory="device" />
+    <file action="link" path="../../../../../driverlib/f28p65x/driverlib/ccs/Debug/driverlib.lib" targetDirectory="" />
+    <file action="copy" path="../../../../../driverlib/f28p65x/driverlib/" targetDirectory="device" excludeFromBuild="True"/>
+    <file action="copy" path="../../../../src/advance_topics/ipc_lab/lab_main_sysconfig_cpu2.c" targetDirectory="" />
+    <file action="copy" path="lab_ipc_sysconfig_launchpad_RAM_cpu2.syscfg" targetDirectory="" applicableConfigurations="RAM" />
+  </project>
+</projectSpec>

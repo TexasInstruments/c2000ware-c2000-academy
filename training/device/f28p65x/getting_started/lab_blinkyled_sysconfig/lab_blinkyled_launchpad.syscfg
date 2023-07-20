@@ -1,0 +1,41 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --board "/boards/LAUNCHXL-F28P65" --product "C2000WARE@4.01.00.00"
+ * @versions {"tool":"1.11.0+2225"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const led       = scripting.addModule("/driverlib/board_components/led", {}, false);
+const led1      = led.addInstance();
+const led2      = led.addInstance();
+const cputimer  = scripting.addModule("/driverlib/cputimer.js", {}, false);
+const cputimer1 = cputimer.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+led1.$name                  = "myBoardLED0";
+led1.$hardware              = system.deviceData.board.components.D1;
+led1.gpio.writeInitialValue = true;
+led1.gpio.initialValue      = 1;
+
+led2.$name     = "myBoardLED1";
+led2.$hardware = system.deviceData.board.components.D2;
+
+cputimer1.$name                    = "Led_Toggle_Timer";
+cputimer1.enableInterrupt          = true;
+cputimer1.registerInterrupts       = true;
+cputimer1.startTimer               = true;
+cputimer1.timerPeriod              = 100000000;
+cputimer1.timerInt.enableInterrupt = true;
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+led1.gpio.gpioPin.$suggestSolution = "hsecDigital.74";
+led2.gpio.gpioPin.$suggestSolution = "hsecDigital.86";

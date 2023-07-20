@@ -1,0 +1,30 @@
+<projectSpec>
+  <project
+        name="clb_ecap_lp_f2837xd"
+        device="TMS320F28379D"
+        cgtVersion="22.6.0.LTS"
+        products="c2000ware_software_package"
+        outputFormat="ELF"
+        launchWizard="False"
+        linkerCommandFile=""
+        enableSysConfigTool="true"
+        sysConfigBuildOptions="--product ${C2000WARE_ROOT}/.metadata/sdk.json --board /boards/LAUNCHXL_F28379D"
+        >
+    <configuration name="CPU1_RAM" compilerBuildOptions="--opt_level=off -I${PROJECT_ROOT}/device -I${C2000WARE_DLIB_ROOT} -v28 -ml -mt --define=DEBUG --cla_support=cla2 --float_support=fpu32 --tmu_support=tmu0 --vcu_support=vcu0 --define=CPU1 --define=_LAUNCHXL_F28379D --diag_warning=225 --diag_suppress=10063 --display_error_number" linkerBuildOptions="--entry_point code_start --stack_size=0x100  " />
+    <configuration name="CPU1_FLASH" compilerBuildOptions="--opt_level=off -I${PROJECT_ROOT}/device -I${C2000WARE_DLIB_ROOT} -v28 -ml -mt --define=DEBUG --define=_FLASH --cla_support=cla2 --float_support=fpu32 --tmu_support=tmu0 --vcu_support=vcu0 --define=CPU1 --define=_LAUNCHXL_F28379D --diag_warning=225  --diag_suppress=10063 --display_error_number" linkerBuildOptions="--entry_point code_start --stack_size=0x100  " />
+    <pathVariable name="C2000WARE_DLIB_ROOT" path="../../../../../driverlib/f2837xd/driverlib" scope="project" />
+    <pathVariable name="C2000WARE_ROOT" path="../../../../../" scope="project" />
+    <file action="copy" path="../../../../../device_support/f2837xd/common/include/driverlib.h" targetDirectory="device" />
+    <file action="copy" path="../../../../../device_support/f2837xd/common/include/device.h" targetDirectory="device" />
+    <file action="copy" path="../../../../../device_support/f2837xd/common/source/device.c" targetDirectory="device" /> 
+    <file action="copy" path="../../../../../device_support/f2837xd/headers/include/" targetDirectory="device" />
+    <file action="copy" path="../../../../../device_support/f2837xd/common/source/F2837xD_CodeStartBranch.asm" targetDirectory="device" />
+    <file action="copy" path="../../../../../device_support/f2837xd/common/targetConfigs/TMS320F28379D.ccxml" targetDirectory="targetConfigs" applicableConfigurations="CPU1_RAM,CPU1_FLASH" />
+    <file action="copy" path="../../../../../device_support/f2837xd/common/cmd/2837xD_RAM_lnk_cpu1.cmd" targetDirectory="" applicableConfigurations="CPU1_RAM" />
+    <file action="copy" path="../../../../../device_support/f2837xd/common/cmd/2837xD_FLASH_lnk_cpu1.cmd" targetDirectory="" applicableConfigurations="CPU1_FLASH" />
+    <file action="link" path="../../../../../driverlib/f2837xd/driverlib/ccs/Debug/driverlib.lib" targetDirectory="" />
+    <file action="copy" path="../../../../../driverlib/f2837xd/driverlib/" targetDirectory="device" excludeFromBuild="True"/>
+    <file action="copy" path="../../../../src/advance_topics/clb_ecap_lab/lab_main.c" targetDirectory="" />
+    <file action="copy" path="lab_clb_ecap_launchpad.syscfg" targetDirectory="" applicableConfigurations="CPU1_RAM,CPU1_FLASH" />
+  </project>
+</projectSpec>

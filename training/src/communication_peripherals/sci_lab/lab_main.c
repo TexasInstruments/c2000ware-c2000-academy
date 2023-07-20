@@ -106,7 +106,7 @@ void main(void)
     //
     // Start CPU Timer 0
     //
-    CPUTimer_startTimer(myCPUTIMER0_BASE);
+    CPUTimer_startTimer(INT_myCPUTIMER0);
 
     //
     // Define local variables
@@ -130,7 +130,6 @@ void main(void)
             // Read a character from the FIFO.
             //
             receivedChar = SCI_readCharBlockingFIFO(mySCIA_BASE);
-            SCI_writeCharBlockingFIFO(mySCIA_BASE, receivedChar);
 
 
             //Turns character to digit
@@ -151,6 +150,7 @@ void main(void)
             //
             msg = "  LED set to blink rate \0";
             SCI_writeCharArray(mySCIA_BASE, (uint16_t*)msg, 25);
+            SCI_writeCharBlockingFIFO(mySCIA_BASE, receivedChar);
         }
 }
 

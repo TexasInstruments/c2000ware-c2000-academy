@@ -1,0 +1,140 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --board "/boards/LAUNCHXL_F280039C" --product "C2000WARE@4.01.00.00"
+ * @versions {"tool":"1.11.0+2225"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const led        = scripting.addModule("/driverlib/board_components/led", {}, false);
+const led1       = led.addInstance();
+const clb        = scripting.addModule("/driverlib/clb.js", {}, false);
+const clb1       = clb.addInstance();
+const clbxbar    = scripting.addModule("/driverlib/clbxbar.js", {}, false);
+const clbxbar1   = clbxbar.addInstance();
+const epwm       = scripting.addModule("/driverlib/epwm.js", {}, false);
+const epwm1      = epwm.addInstance();
+const inputxbar  = scripting.addModule("/driverlib/inputxbar.js", {}, false);
+const inputxbar1 = inputxbar.addInstance();
+const TILE       = scripting.addModule("/utilities/clb_tool/clb_syscfg/source/TILE", {}, false);
+const TILE1      = TILE.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+led1.$name     = "myBoardLED0";
+led1.$hardware = system.deviceData.board.components.LED5;
+
+clb1.$name                  = "myCLB0";
+clb1.inputTypeCLB_IN1       = "GLOBAL";
+clb1.registerInterrupts     = true;
+clb1.attachTile             = true;
+clb1.filterConfigCLB_IN1    = "CLB_FILTER_RISING_EDGE";
+clb1.inputTypeCLB_IN2       = "GLOBAL";
+clb1.filterConfigCLB_IN2    = "CLB_FILTER_FALLING_EDGE";
+clb1.inputTypeCLB_IN3       = "LOCAL";
+clb1.inputsUsed             = ["CLB_IN0","CLB_IN1","CLB_IN2"];
+clb1.initTile               = true;
+clb1.inputTypeCLB_IN0       = "GLOBAL";
+clb1.synchronizeCLB_IN0     = true;
+clb1.synchronizeCLB_IN1     = true;
+clb1.synchronizeCLB_IN2     = true;
+clb1.enableCLB              = true;
+clb1.clbInt.enableInterrupt = true;
+
+clbxbar1.$name      = "myCLBXBAR0";
+clbxbar1.muxesUsed  = ["XBAR_MUX01"];
+clbxbar1.mux1Config = "XBAR_CLB_MUX01_INPUTXBAR1";
+
+epwm1.$name                                                      = "myEPWM0";
+epwm1.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_1";
+epwm1.epwmTimebase_counterMode                                   = "EPWM_COUNTER_MODE_UP_DOWN";
+epwm1.epwmTimebase_syncInPulseSource                             = "EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM1";
+epwm1.epwmTimebase_syncOutPulseMode                              = ["EPWM_SYNC_OUT_PULSE_ON_SOFTWARE"];
+epwm1.epwmCounterCompare_cmpA                                    = 12500;
+epwm1.epwmTimebase_period                                        = 25000;
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_shadowMode            = true;
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_usedEvents            = ["EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPA","EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPA"];
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm1.useCase                                                    = "CUSTOM";
+epwm1.useInterfacePins                                           = ["EPWM#_A"];
+epwm1.epwm.$assign                                               = "EPWM1";
+
+inputxbar1.$name          = "myINPUTXBAR0";
+inputxbar1.inputxbar7Gpio = "GPIO0";
+inputxbar1.inputxbar1Gpio = "GPIO48";
+inputxbar1.inputsUsed     = ["inputxbar1Gpio"];
+
+TILE1.$name                  = "TILE0";
+clb1.tile                    = TILE1;
+TILE1.BOUNDARY.$name         = "BOUNDARY0";
+TILE1.LUT_0.$name            = "LUT_0";
+TILE1.LUT_0.i0               = "BOUNDARY.in0";
+TILE1.LUT_0.eqn              = "!i0";
+TILE1.LUT_1.$name            = "LUT_1";
+TILE1.LUT_1.i0               = "FSM_0.S0";
+TILE1.LUT_1.eqn              = "i0&i1";
+TILE1.LUT_1.i1               = "BOUNDARY.in2";
+TILE1.LUT_2.$name            = "LUT_2";
+TILE1.LUT_2.i0               = "FSM_0.S1";
+TILE1.LUT_2.eqn              = "i0&i1";
+TILE1.LUT_2.i1               = "BOUNDARY.in2";
+TILE1.FSM_0.$name            = "FSM_0";
+TILE1.FSM_0.eqn_out          = "s0";
+TILE1.FSM_0.eqn_s0           = "s0^e0";
+TILE1.FSM_0.eqn_s1           = "!(s0^e0)";
+TILE1.FSM_0.e0               = "BOUNDARY.in1";
+TILE1.FSM_1.$name            = "FSM_1";
+TILE1.FSM_2.$name            = "FSM_2";
+TILE1.COUNTER_0.$name        = "COUNTER_0";
+TILE1.COUNTER_0.mode1        = "1";
+TILE1.COUNTER_0.mode0        = "BOUNDARY.in0";
+TILE1.COUNTER_0.reset        = "BOUNDARY.in1";
+TILE1.COUNTER_1.$name        = "COUNTER_1";
+TILE1.COUNTER_1.mode1        = "1";
+TILE1.COUNTER_1.mode0        = "LUT_0.OUT";
+TILE1.COUNTER_1.reset        = "BOUNDARY.in2";
+TILE1.COUNTER_2.$name        = "COUNTER_2";
+TILE1.OUTLUT_0.$name         = "OUTLUT_0";
+TILE1.OUTLUT_1.$name         = "OUTLUT_1";
+TILE1.OUTLUT_2.$name         = "OUTLUT_2";
+TILE1.OUTLUT_3.$name         = "OUTLUT_3";
+TILE1.OUTLUT_4.$name         = "OUTLUT_4";
+TILE1.OUTLUT_5.$name         = "OUTLUT_5";
+TILE1.OUTLUT_6.$name         = "OUTLUT_6";
+TILE1.OUTLUT_7.$name         = "OUTLUT_7";
+TILE1.HLC.$name              = "HLC_0";
+TILE1.HLC.e0                 = "LUT_1.OUT";
+TILE1.HLC.e2                 = "LUT_2.OUT";
+TILE1.HLC.e1                 = "BOUNDARY.in1";
+TILE1.HLC.program0.$name     = "HLCP_0";
+TILE1.HLC.program0.instruct0 = "MOV C0, R0";
+TILE1.HLC.program1.$name     = "HLCP_1";
+TILE1.HLC.program1.instruct0 = "MOV C1, R1";
+TILE1.HLC.program2.$name     = "HLCP_2";
+TILE1.HLC.program2.instruct0 = "MOV C0, R2";
+TILE1.HLC.program2.instruct1 = "PUSH R0";
+TILE1.HLC.program2.instruct2 = "PUSH R1";
+TILE1.HLC.program2.instruct3 = "PUSH R2";
+TILE1.HLC.program2.instruct4 = "PUSH R3";
+TILE1.HLC.program2.instruct5 = "INTR 1";
+TILE1.HLC.program3.$name     = "HLCP_3";
+TILE1.AOC_0.$name            = "AOC_0";
+TILE1.AOC_1.$name            = "AOC_1";
+TILE1.AOC_2.$name            = "AOC_2";
+TILE1.AOC_3.$name            = "AOC_3";
+TILE1.AOC_4.$name            = "AOC_4";
+TILE1.AOC_5.$name            = "AOC_5";
+TILE1.AOC_6.$name            = "AOC_6";
+TILE1.AOC_7.$name            = "AOC_7";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+led1.gpio.gpioPin.$suggestSolution    = "boosterpack1.12";
+epwm1.epwm.epwm_aPin.$suggestSolution = "boosterpack1.40";

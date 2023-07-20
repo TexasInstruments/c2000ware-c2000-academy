@@ -1,0 +1,109 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --board "/boards/LAUNCHXL_F28P65X" --context "CPU1" --product "C2000WARE@5.00.00.00"
+ * @versions {"tool":"1.16.0+2933"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const adc     = scripting.addModule("/driverlib/adc.js", {}, false);
+const adc1    = adc.addInstance();
+const analog  = scripting.addModule("/driverlib/analog.js", {}, false);
+const analog1 = analog.addInstance();
+const led     = scripting.addModule("/driverlib/board_components/led", {}, false);
+const led1    = led.addInstance();
+const led2    = led.addInstance();
+const dac     = scripting.addModule("/driverlib/dac.js", {}, false);
+const dac1    = dac.addInstance();
+const epwm    = scripting.addModule("/driverlib/epwm.js", {}, false);
+const epwm1   = epwm.addInstance();
+const ipc     = scripting.addModule("/driverlib/ipc.js");
+const memcfg  = scripting.addModule("/driverlib/memcfg.js");
+const CMD     = scripting.addModule("/utilities/cmd_tool/cmd_syscfg/source/CMD");
+const CMD1    = CMD.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+adc1.$name                          = "myADC0";
+adc1.adcClockPrescaler              = "ADC_CLK_DIV_4_0";
+adc1.interruptPulseMode             = "ADC_PULSE_END_OF_CONV";
+adc1.enabledSOCs                    = ["ADC_SOC_NUMBER0"];
+adc1.soc0Trigger                    = "ADC_TRIGGER_EPWM2_SOCA";
+adc1.soc0SampleWindow               = 8;
+adc1.enabledInts                    = ["ADC_INT_NUMBER1"];
+adc1.enableInterrupt1ContinuousMode = true;
+adc1.enableInterrupt1               = true;
+adc1.registerInterrupts             = ["1"];
+adc1.adcInt1.interruptHandler       = "adcA1ISR";
+adc1.adcInt1.enableInterrupt        = true;
+
+led1.$hardware              = system.deviceData.board.components.LED4;
+led1.$name                  = "myBoardLED0";
+led1.gpio.writeInitialValue = true;
+led1.gpio.initialValue      = 1;
+
+led2.$name                  = "myBoardLED1";
+led2.gpio.controllerCore    = "GPIO_CORE_CPU2";
+led2.gpio.writeInitialValue = true;
+
+dac1.$name            = "myDAC0";
+dac1.referenceVoltage = "DAC_REF_ADC_VREFHI";
+dac1.enableOutput     = true;
+dac1.dacBase          = "DACC_BASE";
+
+analog1.$name            = "myANALOGPinMux0";
+adc1.analog              = analog1;
+dac1.analog              = analog1;
+analog1.useCase          = "CUSTOM";
+analog1.useInterfacePins = ["A0/DACA_OUT","B1/DACC_OUT"];
+
+epwm1.$name                                             = "myEPWM0";
+epwm1.epwmTimebase_hsClockDiv                           = "EPWM_HSCLOCK_DIVIDER_1";
+epwm1.epwmTimebase_phaseEnable                          = true;
+epwm1.epwmEventTrigger_EPWM_SOC_A_triggerEnable         = true;
+epwm1.epwmEventTrigger_EPWM_SOC_A_triggerSource         = "EPWM_SOC_TBCTR_PERIOD";
+epwm1.epwmEventTrigger_EPWM_SOC_A_triggerEventPrescalar = "1";
+epwm1.epwmTimebase_period                               = 1999;
+epwm1.epwmTimebase_counterMode                          = "EPWM_COUNTER_MODE_UP";
+epwm1.epwm.$assign                                      = "EPWM2";
+epwm1.epwm.epwm_aPin.$assign                            = "boosterpack2.80";
+epwm1.epwm.epwm_bPin.$assign                            = "boosterpack2.79";
+
+ipc.registerInterrupts       = ["1"];
+ipc.ipcRegisterFlag          = ["IPC_FLAG0","IPC_FLAG31"];
+ipc.enableInterrupt0         = true;
+ipc.flagHandler31            = "IPC_SYNC";
+ipc.ipcInt1.enableInterrupt  = true;
+ipc.ipcInt1.interruptHandler = "ipc1_ISR";
+
+memcfg.init_MEMCFG_SECT_GS4   = true;
+memcfg.config_MEMCFG_SECT_GS4 = "MEMCFG_GSRAMCONTROLLER_CPU2";
+
+CMD.activateCMD = true;
+
+CMD1.$name                    = "CMD0";
+CMD1.sectionMemory_text       = ["RAMD0","RAMD1","RAMLS0","RAMLS1","RAMLS2","RAMLS3"];
+CMD1.sectionMemory_ramfunc    = ["RAMM0"];
+CMD1.sectionMemory_cinit      = ["RAMM0"];
+CMD1.sectionMemory_init_array = ["RAMM0"];
+CMD1.sectionMemory_switch     = ["RAMM0"];
+CMD1.sectionMemory_stack      = ["RAMM1"];
+CMD1.sectionMemory_bss        = ["RAMLS5"];
+CMD1.sectionMemory_data       = ["RAMLS5"];
+CMD1.sectionAlignEnable_binit = true;
+CMD1.sectionMemory_const      = ["RAMLS5","RAMLS6"];
+CMD1.sectionMemory_sysmem     = ["RAMLS4"];
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+led1.gpio.gpioPin.$suggestSolution                = "boosterpack1.13";
+led2.gpio.gpioPin.$suggestSolution                = "boosterpack2.51";
+analog1.analog.$suggestSolution                   = "ANALOG";
+analog1.analog["a0/daca_outPin"].$suggestSolution = "boosterpack1.30";
+analog1.analog["b1/dacc_outPin"].$suggestSolution = "boosterpack2.70";

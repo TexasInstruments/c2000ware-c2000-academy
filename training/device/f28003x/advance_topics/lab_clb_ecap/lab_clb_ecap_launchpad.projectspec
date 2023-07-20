@@ -1,0 +1,30 @@
+<projectSpec>
+  <project
+        name="clb_ecap_lp_f28003x"
+        device="TMS320F280039C"
+        cgtVersion="22.6.0.LTS"
+        products="c2000ware_software_package"
+        outputFormat="ELF"
+        launchWizard="False"
+        linkerCommandFile=""
+        enableSysConfigTool="true"
+        sysConfigBuildOptions="--product ${C2000WARE_ROOT}/.metadata/sdk.json --board /boards/LAUNCHXL_F280039C"
+        >
+    <configuration name="CPU1_RAM" compilerBuildOptions="--opt_level=off -I${PROJECT_ROOT}/device -I${C2000WARE_DLIB_ROOT} -v28 -ml -mt --define=DEBUG --cla_support=cla2 --float_support=fpu32 --tmu_support=tmu0 --vcu_support=vcu0 --diag_warning=225 --diag_suppress=10063 --display_error_number --define=CPU1 --define=USE_ADC_REFERENCE_INTERNAL --define=_LAUNCHXL_F280039C" linkerBuildOptions="--entry_point code_start --stack_size=0x100  " />
+    <configuration name="CPU1_FLASH" compilerBuildOptions="--opt_level=off -I${PROJECT_ROOT}/device -I${C2000WARE_DLIB_ROOT} -v28 -ml -mt --cla_support=cla2 --float_support=fpu32 --gen_func_subsections=on --define=DEBUG  --define=USE_ADC_REFERENCE_INTERNAL --define=_FLASH --diag_warning=225 --diag_suppress=10063 --define=_LAUNCHXL_F280039C" linkerBuildOptions="--entry_point code_start --stack_size=0x200 --heap_size=0x100  --define=_FLASH"/>
+    <pathVariable name="C2000WARE_DLIB_ROOT" path="../../../../../driverlib/f28003x/driverlib" scope="project" />
+    <pathVariable name="C2000WARE_ROOT" path="../../../../../" scope="project" />
+    <file action="copy" path="../../../../../device_support/f28003x/common/include/driverlib.h" targetDirectory="device" />
+    <file action="copy" path="../../../../../device_support/f28003x/common/include/device.h" targetDirectory="device" />
+    <file action="copy" path="../../../../../device_support/f28003x/common/source/device.c" targetDirectory="device" /> 
+    <file action="copy" path="../../../../../device_support/f28003x/headers/include/" targetDirectory="device" />
+    <file action="copy" path="../../../../../device_support/f28003x/common/source/f28003x_codestartbranch.asm" targetDirectory="device" />
+    <file action="copy" path="../../../../../device_support/f28003x/common/targetConfigs/TMS320F280039C_LaunchPad.ccxml" targetDirectory="targetConfigs" applicableConfigurations="CPU1_RAM, CPU1_FLASH" />
+    <file action="copy" path="../../../../../device_support/f28003x/common/cmd/28003x_generic_ram_lnk.cmd" targetDirectory="" applicableConfigurations="CPU1_RAM" />
+    <file action="copy" path="../../../../../device_support/f28003x/common/cmd/28003x_generic_flash_lnk.cmd" targetDirectory="" applicableConfigurations="CPU1_FLASH" />
+    <file action="link" path="../../../../../driverlib/f28003x/driverlib/ccs/Debug/driverlib.lib" targetDirectory="" />
+    <file action="copy" path="../../../../../driverlib/f28003x/driverlib/" targetDirectory="device" excludeFromBuild="True"/>
+    <file action="copy" path="../../../../src/advance_topics/clb_ecap_lab/lab_main.c" targetDirectory="" />
+    <file action="copy" path="lab_clb_ecap_launchpad.syscfg" targetDirectory="" applicableConfigurations="CPU1_RAM,CPU1_FLASH" />
+  </project>
+</projectSpec>

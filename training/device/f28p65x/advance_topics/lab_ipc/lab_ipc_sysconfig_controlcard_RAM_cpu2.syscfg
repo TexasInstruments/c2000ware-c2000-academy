@@ -1,0 +1,37 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --board "/boards/TMDSCNCD28P65X" --context "CPU2" --product "C2000WARE@5.00.00.00"
+ * @versions {"tool":"1.16.0+2933"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const ipc  = scripting.addModule("/driverlib/ipc.js");
+const CMD  = scripting.addModule("/utilities/cmd_tool/cmd_syscfg/source/CMD");
+const CMD1 = CMD.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+ipc.ipcRegisterFlag          = ["IPC_FLAG1","IPC_FLAG31"];
+ipc.enableInterrupt1         = true;
+ipc.registerInterrupts       = ["0"];
+ipc.flagHandler31            = "IPC_SYNC";
+ipc.ipcInt0.enableInterrupt  = true;
+ipc.ipcInt0.interruptHandler = "ipc0_ISR";
+
+CMD.activateCMD = true;
+
+CMD1.$name                    = "CMD0";
+CMD1.sectionMemory_ramfunc    = ["RAMM0"];
+CMD1.sectionMemory_cinit      = ["RAMM0"];
+CMD1.sectionMemory_stack      = ["RAMM1"];
+CMD1.sectionMemory_bss        = ["RAMGS4"];
+CMD1.sectionMemory_const      = ["RAMGS4"];
+CMD1.sectionMemory_data       = ["RAMGS4"];
+CMD1.sectionMemory_switch     = ["RAMM0"];
+CMD1.sectionMemory_sysmem     = ["RAMGS4"];
+CMD1.sectionMemory_init_array = ["RAMM0"];
+CMD1.sectionMemory_text       = ["RAMGS4"];

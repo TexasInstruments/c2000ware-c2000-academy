@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<system>
+    <project configuration="@match" id="project_0" name="lab_ipc_sysconfig_launchpad_core1">
+    </project>
+    <core id="C28xx_CPU1" project="project_0"/>
+    <project configuration="@match" id="project_1" name="lab_ipc_sysconfig_launchpad_core2">
+    </project>
+    <core id="C28xx_CPU2" project="project_1"/>
+	<preBuildSteps>
+	</preBuildSteps>
+    <postBuildSteps>
+    </postBuildSteps>
+
+</system>

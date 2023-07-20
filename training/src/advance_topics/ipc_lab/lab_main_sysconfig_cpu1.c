@@ -83,11 +83,11 @@ interrupt void ipc1_ISR(void)
     IPC_ackFlagRtoL(IPC_CPU1_L_CPU2_R, IPC_FLAG1);
 
     // Load the new sample on the DAC.
-    DAC_setShadowValue(DACB_BASE, (uint16_t)data);
+    DAC_setShadowValue(myDAC0_BASE, (uint16_t)data);
 
     // Toggle LED1 at a rate of 1Hz.
     if (LedCtr1++ >= 50000) {
-        GPIO_togglePin(CPU1_LED);
+        GPIO_togglePin(myBoardLED0_GPIO_GPIO_PIN_CONFIG);
         LedCtr1 = 0;
     }
 }

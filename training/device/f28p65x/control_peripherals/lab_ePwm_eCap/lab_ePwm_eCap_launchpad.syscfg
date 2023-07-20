@@ -1,0 +1,102 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --board "/boards/LAUNCHXL_F28P65X" --context "CPU1" --product "C2000WARE@5.00.00.00"
+ * @versions {"tool":"1.16.0+2933"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const adc              = scripting.addModule("/driverlib/adc.js", {}, false);
+const adc1             = adc.addInstance();
+const analog           = scripting.addModule("/driverlib/analog.js", {}, false);
+const analog1          = analog.addInstance();
+const asysctl          = scripting.addModule("/driverlib/asysctl.js");
+const led              = scripting.addModule("/driverlib/board_components/led", {}, false);
+const led1             = led.addInstance();
+const ecap             = scripting.addModule("/driverlib/ecap.js", {}, false);
+const ecap1            = ecap.addInstance();
+const epwm             = scripting.addModule("/driverlib/epwm.js", {}, false);
+const epwm1            = epwm.addInstance();
+const epwm2            = epwm.addInstance();
+const inputxbar        = scripting.addModule("/driverlib/inputxbar.js", {}, false);
+const inputxbar1       = inputxbar.addInstance();
+const inputxbar_input  = scripting.addModule("/driverlib/inputxbar_input.js");
+const inputxbar_input1 = inputxbar_input.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+adc1.$name                          = "myADC0";
+adc1.adcClockPrescaler              = "ADC_CLK_DIV_4_0";
+adc1.enabledSOCs                    = ["ADC_SOC_NUMBER0"];
+adc1.enabledInts                    = ["ADC_INT_NUMBER1"];
+adc1.enableInterrupt1               = true;
+adc1.enableInterrupt1ContinuousMode = true;
+adc1.registerInterrupts             = ["1"];
+adc1.soc0Trigger                    = "ADC_TRIGGER_EPWM2_SOCA";
+adc1.soc0SampleWindow               = 8;
+adc1.interruptPulseMode             = "ADC_PULSE_END_OF_CONV";
+adc1.adcInt1.interruptHandler       = "adcA1ISR";
+adc1.adcInt1.enableInterrupt        = true;
+
+analog1.$name            = "myANALOGPinMux0";
+adc1.analog              = analog1;
+analog1.useCase          = "CUSTOM";
+analog1.useInterfacePins = ["A0/DACA_OUT"];
+
+asysctl.analogReference        = "INTERNAL";
+asysctl.analogReferenceVoltage = "1P65";
+
+led1.$name = "myBoardLED0";
+
+ecap1.$name                    = "myECAP0";
+ecap1.eventStop                = "ECAP_EVENT_4";
+ecap1.eventTwoPolarity         = "ECAP_EVNT_FALLING_EDGE";
+ecap1.eventFourPolarity        = "ECAP_EVNT_FALLING_EDGE";
+ecap1.registerInterrupts       = true;
+ecap1.enableInterrupt          = true;
+ecap1.interruptSourceCapture   = ["ECAP_ISR_SOURCE_CAPTURE_EVENT_3"];
+ecap1.ecapInput                = "ECAP_INPUT_INPUTXBAR7";
+ecap1.ecapInt.interruptHandler = "ecap1ISR";
+ecap1.ecapInt.enableInterrupt  = true;
+
+epwm1.$name                                                      = "myEPWM0";
+epwm1.epwmTimebase_counterMode                                   = "EPWM_COUNTER_MODE_UP_DOWN";
+epwm1.epwmCounterCompare_cmpA                                    = 18750;
+epwm1.epwmTimebase_period                                        = 25000;
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_shadowMode            = true;
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm1.epwm.$assign                                               = "EPWM1";
+epwm1.epwm.epwm_aPin.$assign                                     = "boosterpack2.78";
+epwm1.epwm.epwm_bPin.$assign                                     = "boosterpack2.77";
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to EPWM1 BP on the LaunchPad F28P65X\\. Consider selecting it in 'use hardware' above\\. @@@.+?@@@", epwm1.epwm, "epwm_aPin");
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to EPWM1 BP on the LaunchPad F28P65X\\. Consider selecting it in 'use hardware' above\\. @@@.+?@@@", epwm1.epwm, "epwm_bPin");
+
+epwm2.$name                                             = "myEPWM2";
+epwm2.epwmTimebase_period                               = 1999;
+epwm2.epwmTimebase_counterMode                          = "EPWM_COUNTER_MODE_UP";
+epwm2.epwmEventTrigger_EPWM_SOC_A_triggerEnable         = true;
+epwm2.epwmEventTrigger_EPWM_SOC_A_triggerSource         = "EPWM_SOC_TBCTR_PERIOD";
+epwm2.epwmEventTrigger_EPWM_SOC_A_triggerEventPrescalar = "1";
+epwm2.epwm.$assign                                      = "EPWM2";
+epwm2.epwm.epwm_aPin.$assign                            = "boosterpack2.80";
+epwm2.epwm.epwm_bPin.$assign                            = "boosterpack2.79";
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to EPWM2 BP on the LaunchPad F28P65X\\. Consider selecting it in 'use hardware' above\\. @@@.+?@@@", epwm2.epwm, "epwm_aPin");
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to EPWM2 BP on the LaunchPad F28P65X\\. Consider selecting it in 'use hardware' above\\. @@@.+?@@@", epwm2.epwm, "epwm_bPin");
+
+inputxbar1.$name = "myINPUTXBAR0";
+
+inputxbar_input1.$name          = "myINPUTXBARINPUT0";
+inputxbar_input1.inputxbarInput = "XBAR_INPUT7";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+analog1.analog.$suggestSolution                   = "ANALOG";
+analog1.analog["a0/daca_outPin"].$suggestSolution = "boosterpack1.30";
+led1.gpio.gpioPin.$suggestSolution                = "boosterpack2.51";

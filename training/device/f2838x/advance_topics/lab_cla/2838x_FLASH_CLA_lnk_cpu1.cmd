@@ -101,23 +101,6 @@ SECTIONS
 
    dclfuncs : > FLASH1, ALIGN(8)
 
-#if defined(__TI_EABI__)
-    /* CLA specific sections */
-    Cla1Prog        : LOAD = FLASH5,
-                      RUN = RAMLS5,
-                      LOAD_START(Cla1ProgLoadStart),
-                      RUN_START(Cla1ProgRunStart),
-                      LOAD_SIZE(Cla1ProgLoadSize),
-                      PAGE = 0, ALIGN(4)
-#else
-    /* CLA specific sections */
-    Cla1Prog        : LOAD = FLASH5,
-                      RUN = RAMLS5,
-                      LOAD_START(_Cla1ProgLoadStart),
-                      RUN_START(_Cla1ProgRunStart),
-                      LOAD_SIZE(_Cla1ProgLoadSize),
-                      PAGE = 0, ALIGN(4)
-#endif
 
     /* CLA specific sections */
 #if defined(__TI_EABI__)
