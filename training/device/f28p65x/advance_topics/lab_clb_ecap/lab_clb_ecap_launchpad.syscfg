@@ -8,22 +8,20 @@
 /**
  * Import the modules used in this configuration.
  */
-const led                  = scripting.addModule("/driverlib/board_components/led", {}, false);
-const led1                 = led.addInstance();
-const clb                  = scripting.addModule("/driverlib/clb.js", {}, false);
-const clb1                 = clb.addInstance();
-const clb_inputxbar_input  = scripting.addModule("/driverlib/clb_inputxbar_input.js", {}, false);
-const clb_inputxbar_input1 = clb_inputxbar_input.addInstance();
-const clbxbar              = scripting.addModule("/driverlib/clbxbar.js", {}, false);
-const clbxbar1             = clbxbar.addInstance();
-const epwm                 = scripting.addModule("/driverlib/epwm.js", {}, false);
-const epwm1                = epwm.addInstance();
-const gpio                 = scripting.addModule("/driverlib/gpio.js", {}, false);
-const gpio2                = gpio.addInstance();
-const inputxbar            = scripting.addModule("/driverlib/inputxbar.js", {}, false);
-const inputxbar1           = inputxbar.addInstance();
-const TILE                 = scripting.addModule("/utilities/clb_tool/clb_syscfg/source/TILE", {}, false);
-const TILE1                = TILE.addInstance();
+const led              = scripting.addModule("/driverlib/board_components/led", {}, false);
+const led1             = led.addInstance();
+const clb              = scripting.addModule("/driverlib/clb.js", {}, false);
+const clb1             = clb.addInstance();
+const clbxbar          = scripting.addModule("/driverlib/clbxbar.js", {}, false);
+const clbxbar1         = clbxbar.addInstance();
+const epwm             = scripting.addModule("/driverlib/epwm.js", {}, false);
+const epwm1            = epwm.addInstance();
+const inputxbar        = scripting.addModule("/driverlib/inputxbar.js", {}, false);
+const inputxbar1       = inputxbar.addInstance();
+const inputxbar_input  = scripting.addModule("/driverlib/inputxbar_input.js");
+const inputxbar_input1 = inputxbar_input.addInstance();
+const TILE             = scripting.addModule("/utilities/clb_tool/clb_syscfg/source/TILE", {}, false);
+const TILE1            = TILE.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -32,27 +30,25 @@ led1.$name     = "myBoardLED0";
 led1.$hardware = system.deviceData.board.components.LED5;
 
 clb1.$name                  = "myCLB0";
+clb1.inputTypeCLB_IN1       = "GLOBAL";
 clb1.registerInterrupts     = true;
 clb1.attachTile             = true;
 clb1.filterConfigCLB_IN1    = "CLB_FILTER_RISING_EDGE";
+clb1.inputTypeCLB_IN2       = "GLOBAL";
 clb1.filterConfigCLB_IN2    = "CLB_FILTER_FALLING_EDGE";
 clb1.inputTypeCLB_IN3       = "LOCAL";
 clb1.inputsUsed             = ["CLB_IN0","CLB_IN1","CLB_IN2"];
 clb1.initTile               = true;
+clb1.inputTypeCLB_IN0       = "GLOBAL";
 clb1.synchronizeCLB_IN0     = true;
 clb1.synchronizeCLB_IN1     = true;
 clb1.synchronizeCLB_IN2     = true;
 clb1.enableCLB              = true;
-clb1.inputTypeCLB_IN0       = "LOCAL";
-clb1.localConfigCLB_IN0     = "CLB_LOCAL_IN_MUX_INPUT1";
-clb1.inputTypeCLB_IN1       = "LOCAL";
-clb1.localConfigCLB_IN1     = "CLB_LOCAL_IN_MUX_INPUT1";
-clb1.inputTypeCLB_IN2       = "LOCAL";
-clb1.localConfigCLB_IN2     = "CLB_LOCAL_IN_MUX_INPUT1";
 clb1.clbInt.enableInterrupt = true;
 
-clb_inputxbar_input1.$name         = "myCLBINPUTXBARINPUT0";
-clb_inputxbar_input1.inputxbarGpio = "GPIO32";
+clbxbar1.$name      = "myCLBXBAR0";
+clbxbar1.muxesUsed  = ["XBAR_MUX01"];
+clbxbar1.mux1Config = "XBAR_CLB_MUX01_INPUTXBAR1_INPUT1";
 
 epwm1.$name                                                      = "myEPWM0";
 epwm1.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_1";
@@ -69,10 +65,10 @@ epwm1.epwm.$assign                                               = "EPWM1";
 epwm1.epwm.epwm_aPin.$assign                                     = "boosterpack2.78";
 scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to EPWM1 BP on the LaunchPad F28P65X\\. Consider selecting it in 'use hardware' above\\. @@@.+?@@@", epwm1.epwm, "epwm_aPin");
 
-gpio2.$name           = "myGPIO0";
-gpio2.gpioPin.$assign = "boosterpack2.74";
-
 inputxbar1.$name = "myINPUTXBAR0";
+
+inputxbar_input1.$name         = "myINPUTXBARINPUT0";
+inputxbar_input1.inputxbarGpio = "GPIO48";
 
 TILE1.$name                  = "TILE0";
 clb1.tile                    = TILE1;

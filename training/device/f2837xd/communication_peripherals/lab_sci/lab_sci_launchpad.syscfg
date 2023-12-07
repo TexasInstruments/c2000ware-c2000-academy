@@ -1,8 +1,8 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --board "/boards/LAUNCHXL_F28379D" --product "C2000WARE@4.01.00.00"
- * @versions {"tool":"1.11.0+2225"}
+ * @cliArgs --board "/boards/LAUNCHXL_F28379D" --context "CPU1" --product "C2000WARE@5.00.00.00"
+ * @versions {"tool":"1.16.1+2960"}
  */
 
 /**
@@ -30,13 +30,13 @@ cputimer1.timerInt.enableInterrupt = true;
 
 sci1.$name                 = "mySCIA";
 sci1.baudRates             = 9600;
-sci1.sci.$assign           = "SCIB";
-sci1.sci.scirxdPin.$assign = "boosterpack1.3";
-sci1.sci.scitxdPin.$assign = "boosterpack1.4";
+sci1.sci.$assign           = "SCIA";
+sci1.sci.scirxdPin.$assign = "GPIO43";
+sci1.sci.scitxdPin.$assign = "GPIO42";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-led1.gpio.gpioPin.$suggestSolution = "ball.U14";
+led1.gpio.gpioPin.$suggestSolution = "GPIO34";

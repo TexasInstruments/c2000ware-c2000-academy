@@ -106,7 +106,7 @@ void main(void)
     //
     // Start CPU Timer 0
     //
-    CPUTimer_startTimer(INT_myCPUTIMER0);
+    CPUTimer_startTimer(myCPUTIMER0_BASE);
 
     //
     // Define local variables
@@ -118,7 +118,7 @@ void main(void)
     //
     // Send starting message.
     //
-    msg = "\r\n\n\nHello World! Enter a number 0-9 to change the LED blink rate\0";
+    msg = "\r\n\n\nHello World! Enter a number 0-9 to change the LED blink rate.\0";
     SCI_writeCharArray(mySCIA_BASE, (uint16_t*)msg, 65);
 
     for(;;)
@@ -148,9 +148,9 @@ void main(void)
             //
             // Echo back the character.
             //
-            msg = "  LED set to blink rate \0";
+            msg = "\r\nLED set to blink rate \0";
             SCI_writeCharArray(mySCIA_BASE, (uint16_t*)msg, 25);
-            SCI_writeCharBlockingFIFO(mySCIA_BASE, receivedChar);
+            SCI_writeCharBlockingNonFIFO(mySCIA_BASE, receivedChar);
         }
 }
 

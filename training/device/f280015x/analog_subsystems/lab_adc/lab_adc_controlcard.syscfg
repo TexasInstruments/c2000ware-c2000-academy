@@ -1,8 +1,8 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --board "/boards/TMDSCNCD2800157" --context "system" --product "C2000WARE@4.02.00.00"
- * @versions {"tool":"1.13.0+2553"}
+ * @cliArgs --board "/boards/TMDSCNCD2800157" --context "system" --product "C2000WARE@5.00.00.00"
+ * @versions {"tool":"1.16.1+2960"}
  */
 
 /**
@@ -37,8 +37,8 @@ adc1.adcInt1.enableInterrupt = true;
 
 analog1.$name                            = "myANALOGPinMux0";
 adc1.analog                              = analog1;
-analog1.analog["c6, gpio226Pin"].$assign = "ball.11";
-scripting.suppress("Not pinned out,@@@.+?@@@ is not pinned out on the Control Card F2800157\.  @@@.+?@@@", analog1.analog, "c6, gpio226Pin");
+analog1.useCase          = "CUSTOM";
+analog1.useInterfacePins = ["A0/C15/CMP1_DACL"];
 
 asysctl.analogReference        = "INTERNAL";
 asysctl.analogReferenceVoltage = "1P65";
@@ -81,23 +81,4 @@ gpio2.gpioPin.$assign   = "hsecDigital.55";
  */
 analog1.analog.$suggestSolution                        = "ANALOG";
 analog1.analog["a0/c15/cmp1_daclPin"].$suggestSolution = "hsecAnalog.9";
-analog1.analog.a1Pin.$suggestSolution                  = "hsecAnalog.11";
-analog1.analog["a10/c10, gpio230Pin"].$suggestSolution = "hsecAnalog.28";
-analog1.analog["a11/c0Pin"].$suggestSolution           = "hsecAnalog.12";
-analog1.analog["a12/c1Pin"].$suggestSolution           = "hsecAnalog.14";
-analog1.analog["a15/c7Pin"].$suggestSolution           = "hsecAnalog.18";
-analog1.analog["a16/c16, gpio28Pin"].$suggestSolution  = "hsecDigital.76";
-analog1.analog["a17/c17, gpio20Pin"].$suggestSolution  = "hsecDigital.68";
-analog1.analog["a18/c18, gpio21Pin"].$suggestSolution  = "hsecDigital.70";
-analog1.analog["a19/c19, gpio13Pin"].$suggestSolution  = "hsecDigital.60";
-analog1.analog["a2/c9, gpio224Pin"].$suggestSolution   = "hsecAnalog.15";
-analog1.analog["a20/c20, gpio12Pin"].$suggestSolution  = "hsecDigital.58";
-analog1.analog["a3/c5, gpio242Pin"].$suggestSolution   = "hsecAnalog.17";
-analog1.analog["a4/c14Pin"].$suggestSolution           = "hsecAnalog.21";
-analog1.analog["a5/c2Pin"].$suggestSolution            = "hsecAnalog.23";
-analog1.analog["a6, gpio228Pin"].$suggestSolution      = "hsecAnalog.25";
-analog1.analog["a7/c3Pin"].$suggestSolution            = "hsecAnalog.27";
-analog1.analog["a8/c11Pin"].$suggestSolution           = "hsecAnalog.30";
-analog1.analog["c4/a14Pin"].$suggestSolution           = "hsecAnalog.24";
-analog1.analog["c8/a9, gpio227Pin"].$suggestSolution   = "hsecAnalog.26";
 led1.gpio.gpioPin.$suggestSolution                     = "hsecDigital.96";

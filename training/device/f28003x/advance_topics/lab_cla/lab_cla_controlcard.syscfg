@@ -1,8 +1,8 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --board "/boards/TMDSCNCD280039C" --product "C2000WARE@4.01.00.00"
- * @versions {"tool":"1.11.0+2225"}
+ * @cliArgs --board "/boards/TMDSCNCD280039C" --context "system" --product "C2000WARE@5.00.00.00"
+ * @versions {"tool":"1.16.1+2960"}
  */
 
 /**
@@ -10,6 +10,8 @@
  */
 const adc     = scripting.addModule("/driverlib/adc.js", {}, false);
 const adc1    = adc.addInstance();
+const analog  = scripting.addModule("/driverlib/analog.js", {}, false);
+const analog1 = analog.addInstance();
 const asysctl = scripting.addModule("/driverlib/asysctl.js");
 const led     = scripting.addModule("/driverlib/board_components/led", {}, false);
 const led1    = led.addInstance();
@@ -34,10 +36,10 @@ adc1.enabledInts                    = ["ADC_INT_NUMBER1"];
 adc1.enableInterrupt1               = true;
 adc1.enableInterrupt1ContinuousMode = true;
 
-const analog  = scripting.addModule("/driverlib/analog.js", {}, false);
-const analog1 = analog.addInstance({}, false);
 analog1.$name = "myANALOGPinMux0";
 adc1.analog   = analog1;
+analog1.useCase          = "CUSTOM";
+analog1.useInterfacePins = ["A0/B15/C15/DACA_OUT"];
 
 asysctl.analogReference = "INTERNAL";
 
@@ -95,28 +97,4 @@ memcfg.config_MEMCFG_SECT_LS0 = "CLA_prog";
  */
 analog1.analog.$suggestSolution                           = "ANALOG";
 analog1.analog["a0/b15/c15/daca_outPin"].$suggestSolution = "hsecAnalog.9";
-analog1.analog["a1/b7/dacb_outPin"].$suggestSolution      = "hsecAnalog.11";
-analog1.analog["a10/b1/c10Pin"].$suggestSolution          = "hsecAnalog.25";
-analog1.analog["a11/b10/c0Pin"].$suggestSolution          = "hsecAnalog.27";
-analog1.analog["a12, c5Pin"].$suggestSolution             = "hsecAnalog.37";
-analog1.analog["a14/b14/c4Pin"].$suggestSolution          = "hsecAnalog.36";
-analog1.analog["a2/b6/c9Pin"].$suggestSolution            = "hsecAnalog.15";
-analog1.analog["a3, c7/b9Pin"].$suggestSolution           = "hsecAnalog.39";
-analog1.analog["a4/b8Pin"].$suggestSolution               = "hsecAnalog.17";
-analog1.analog.a5Pin.$suggestSolution                     = "hsecAnalog.21";
-analog1.analog.a6Pin.$suggestSolution                     = "hsecAnalog.23";
-analog1.analog.a8Pin.$suggestSolution                     = "hsecAnalog.30";
-analog1.analog.a9Pin.$suggestSolution                     = "hsecAnalog.34";
-analog1.analog["b0/c11Pin"].$suggestSolution              = "hsecAnalog.31";
-analog1.analog.b11Pin.$suggestSolution                    = "hsecAnalog.24";
-analog1.analog["b11, gpio21Pin"].$suggestSolution         = "hsecDigital.70";
-analog1.analog["b2/c6Pin"].$suggestSolution               = "hsecAnalog.14";
-analog1.analog["b3/vdacPin"].$suggestSolution             = "hsecAnalog.12";
-analog1.analog["b4/c8Pin"].$suggestSolution               = "hsecAnalog.20";
-analog1.analog.b5Pin.$suggestSolution                     = "hsecAnalog.26";
-analog1.analog["b5, gpio20Pin"].$suggestSolution          = "hsecDigital.68";
-analog1.analog.c1Pin.$suggestSolution                     = "hsecAnalog.28";
-analog1.analog.c14Pin.$suggestSolution                    = "hsecAnalog.40";
-analog1.analog["c2/b12Pin"].$suggestSolution              = "hsecAnalog.18";
-analog1.analog["c3/a7Pin"].$suggestSolution               = "hsecAnalog.33";
 led1.gpio.gpioPin.$suggestSolution                        = "hsecDigital.86";
