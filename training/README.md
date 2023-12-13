@@ -11,6 +11,7 @@
 The C2000 Academy is a great resource for developers to learn about C2000 real-time microcontrollers platform. The Academy delivers easy-to-use training modules that span a wide range of topics for all C2000 devices. Additionally, C2000 Academy provides hands-on lab exercises and a full solution for each lab exercise. C2000 Academy is applicable to all generation-3 devices- F2807x, F2837xS, F2837xD, F2838xS, F2838xD, F28004x, F28002x, F28003x, F280013x ,F280015x and F28P65x
 
 List of devices supported
+- [F28P65x](https://www.ti.com/product/TMS320F28P650DK) 
 - [F280015x](https://www.ti.com/product/TMS320F2800157) 
 - [F280013x](https://www.ti.com/product/TMS320F2800137)
 - [F28004x](https://www.ti.com/product/TMS320F280049C)
