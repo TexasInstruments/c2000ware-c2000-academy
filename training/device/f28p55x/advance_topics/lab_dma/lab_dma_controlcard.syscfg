@@ -1,0 +1,110 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --board "/boards/TMDSCNCD28P55X" --context "system" --product "C2000WARE@5.02.00.00"
+ * @versions {"tool":"1.19.0+3288"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const adc       = scripting.addModule("/driverlib/adc.js", {}, false);
+const adc1      = adc.addInstance();
+const analog    = scripting.addModule("/driverlib/analog.js", {}, false);
+const analog1   = analog.addInstance();
+const asysctl   = scripting.addModule("/driverlib/asysctl.js");
+const led       = scripting.addModule("/driverlib/board_components/led", {}, false);
+const led1      = led.addInstance();
+const cputimer  = scripting.addModule("/driverlib/cputimer.js", {}, false);
+const cputimer1 = cputimer.addInstance();
+const dma       = scripting.addModule("/driverlib/dma.js", {}, false);
+const dma1      = dma.addInstance();
+const epwm      = scripting.addModule("/driverlib/epwm.js", {}, false);
+const epwm1     = epwm.addInstance();
+const epwm2     = epwm.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+adc1.$name                          = "myADC0";
+adc1.adcClockPrescaler              = "ADC_CLK_DIV_4_0";
+adc1.enabledSOCs                    = ["ADC_SOC_NUMBER0"];
+adc1.soc0Trigger                    = "ADC_TRIGGER_EPWM2_SOCA";
+adc1.soc0SampleWindow               = 8;
+adc1.interruptPulseMode             = "ADC_PULSE_END_OF_CONV";
+adc1.enabledInts                    = ["ADC_INT_NUMBER1"];
+adc1.enableInterrupt1               = true;
+adc1.enableInterrupt1ContinuousMode = true;
+scripting.suppress("SOC0 sample window must be at least 10", adc1, "soc0SampleWindow");
+
+analog1.$name                                       = "myANALOGPinMux0";
+adc1.analog                                         = analog1;
+analog1.useCase                                     = "CUSTOM";
+analog1.useInterfacePins                            = ["A0, B15, C15, DACA_OUT"];
+analog1.analog.$assign                              = "ANALOG";
+analog1.analog["a0, b15, c15, daca_outPin"].$assign = "hsecAnalog.9";
+
+asysctl.analogReference        = "INTERNAL";
+asysctl.analogReferenceVoltage = "1P65";
+
+led1.$name     = "myBoardLED0";
+led1.$hardware = system.deviceData.board.components.D2;
+
+cputimer1.$name       = "myCPUTIMER0";
+cputimer1.timerPeriod = 4294967295;
+
+dma1.$name                   = "myDMA0";
+dma1.enableTriggers          = true;
+dma1.triggerSource           = "DMA_TRIGGER_ADCA1";
+dma1.useInterrupts           = true;
+dma1.registerInterrupts      = true;
+dma1.enableInterrupts        = true;
+dma1.emulationMode           = "DMA_EMULATION_FREE_RUN";
+dma1.continuousModeConfig    = "DMA_CFG_CONTINUOUS_ENABLE";
+dma1.transferSize            = 50;
+dma1.startChannel            = true;
+dma1.srcAddressInputMode     = "VARIABLE";
+dma1.srcWrapSize             = 50;
+dma1.destAddressInputMode    = "VARIABLE";
+dma1.destAddressVariable     = "AdcRawBufAddr";
+dma1.srcAddressVariable      = "AdcAddr";
+dma1.destTransferStep        = 1;
+dma1.destWrapSize            = 50;
+dma1.dmaInt.enableInterrupt  = true;
+dma1.dmaInt.interruptHandler = "dma_Ch1ISR";
+
+epwm1.$name                                                      = "myEPWM0";
+epwm1.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_1";
+epwm1.epwmTimebase_period                                        = 25000;
+epwm1.epwmTimebase_counterMode                                   = "EPWM_COUNTER_MODE_UP_DOWN";
+epwm1.epwmCounterCompare_cmpA                                    = 18750;
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_shadowMode            = true;
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm1.epwm.$assign                                               = "EPWM1";
+epwm1.epwm.epwm_aPin.$assign                                     = "hsecDigital.49";
+epwm1.epwm.epwm_bPin.$assign                                     = "hsecDigital.51";
+scripting.suppress("It is recommended to use a non-zero counter compare value when using shadow to active load of action qualifier A/B control register on TBCTR=0 boundary", epwm1, "epwmCounterCompare_cmpB");
+scripting.suppress("It is recommended to use a non-zero counter compare value when using shadow to active load of action qualifier A/B control register on TBCTR=0 boundary", epwm1, "epwmCounterCompare_cmpA");
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to EPWM1 on the Control Card F28P55X\\. Consider selecting it in 'use hardware' above\\. @@@.+?@@@", epwm1.epwm, "epwm_aPin");
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to EPWM1 on the Control Card F28P55X\\. Consider selecting it in 'use hardware' above\\. @@@.+?@@@", epwm1.epwm, "epwm_bPin");
+
+epwm2.$name                                             = "myEPWM1";
+epwm2.epwmTimebase_hsClockDiv                           = "EPWM_HSCLOCK_DIVIDER_1";
+epwm2.epwmTimebase_period                               = 1999;
+epwm2.epwmTimebase_counterMode                          = "EPWM_COUNTER_MODE_UP";
+epwm2.epwmEventTrigger_EPWM_SOC_A_triggerEnable         = true;
+epwm2.epwmEventTrigger_EPWM_SOC_A_triggerSource         = "EPWM_SOC_TBCTR_ZERO_OR_PERIOD";
+epwm2.epwmEventTrigger_EPWM_SOC_A_triggerEventPrescalar = "1";
+epwm2.epwm.$assign                                      = "EPWM2";
+epwm2.epwm.epwm_aPin.$assign                            = "hsecDigital.53";
+epwm2.epwm.epwm_bPin.$assign                            = "hsecDigital.55";
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to EPWM2 on the Control Card F28P55X\\. Consider selecting it in 'use hardware' above\\. @@@.+?@@@", epwm2.epwm, "epwm_aPin");
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to EPWM2 on the Control Card F28P55X\\. Consider selecting it in 'use hardware' above\\. @@@.+?@@@", epwm2.epwm, "epwm_bPin");
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+led1.gpio.gpioPin.$suggestSolution = "hsecDigital.86";

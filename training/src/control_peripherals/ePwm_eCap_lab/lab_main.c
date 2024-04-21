@@ -4,6 +4,8 @@
 //
 // TITLE:  ePWM/eCAP Lab exercise
 //
+// C2K ACADEMY URL: https://dev.ti.com/tirex/local?id=source_c2000_academy_labs_control_peripherals_c2000_lab_pwm&packageId=C2000-ACADEMY
+//
 // This lab configures ePWM at 1kHz, and eCAP to capture the events
 // to measure pwm duty cycle
 //

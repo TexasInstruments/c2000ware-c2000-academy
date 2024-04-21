@@ -1,0 +1,63 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --board "/boards/TMDSCNCD280049C" --context "system" --product "C2000WARE@5.01.00.00"
+ * @versions {"tool":"1.19.0+3283"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const fsirx  = scripting.addModule("/driverlib/fsirx.js", {}, false);
+const fsirx1 = fsirx.addInstance();
+const fsitx  = scripting.addModule("/driverlib/fsitx.js", {}, false);
+const fsitx1 = fsitx.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+fsirx1.$name                      = "myFSIRX0";
+fsirx1.enableInterrupt            = true;
+fsirx1.useInterrupts              = ["FSI_INT1","FSI_INT2"];
+fsirx1.registerInterruptLine1     = true;
+fsirx1.registerInterruptLine2     = true;
+fsirx1.enableLoopback             = true;
+fsirx1.timeoutDelay               = 81920;
+fsirx1.softwareFrameSize          = "6";
+fsirx1.enabledINT2Interrupts      = ["FSI_RX_EVT_CRC_ERR","FSI_RX_EVT_EOF_ERR","FSI_RX_EVT_PING_WD_TIMEOUT","FSI_RX_EVT_TYPE_ERR"];
+fsirx1.enabledINT1Interrupts      = ["FSI_RX_EVT_DATA_FRAME"];
+fsirx1.fsirx.$assign              = "FSIRXA";
+fsirx1.fsirx.fsirx_d0Pin.$assign  = "hsecDigital.82";
+fsirx1.fsirx.fsirx_d1Pin.$assign  = "hsecDigital.74";
+fsirx1.fsiRxInt1.enableInterrupt  = true;
+fsirx1.fsiRxInt1.interruptHandler = "fsiRxInt1ISR";
+fsirx1.fsiRxInt2.enableInterrupt  = true;
+fsirx1.fsiRxInt2.interruptHandler = "fsiRxInt2ISR";
+
+fsitx1.$name                      = "myFSITX0";
+fsitx1.enableInterrupt            = true;
+fsitx1.useInterrupts              = ["FSI_INT1","FSI_INT2"];
+fsitx1.registerInterruptLine1     = true;
+fsitx1.registerInterruptLine2     = true;
+fsitx1.enabledINT1Interrupts      = ["FSI_TX_EVT_FRAME_DONE"];
+fsitx1.pingTimeout                = true;
+fsitx1.timeoutDelay               = 65536;
+fsitx1.softwareFrameSize          = "6";
+fsitx1.frameType                  = "FSI_FRAME_TYPE_NWORD_DATA";
+fsitx1.enabledINT2Interrupts      = ["FSI_TX_EVT_BUF_OVERRUN","FSI_TX_EVT_BUF_UNDERRUN"];
+fsitx1.clkPres                    = 1;
+fsitx1.fsitx.$assign              = "FSITXA";
+fsitx1.fsitx.fsitx_d0Pin.$assign  = "hsecDigital.54";
+fsitx1.fsitx.fsitx_d1Pin.$assign  = "hsecDigital.52";
+fsitx1.fsitx.fsitx_clkPin.$assign = "hsecDigital.56";
+fsitx1.fsiTxInt1.enableInterrupt  = true;
+fsitx1.fsiTxInt1.interruptHandler = "fsiTxInt1ISR";
+fsitx1.fsiTxInt2.enableInterrupt  = true;
+fsitx1.fsiTxInt2.interruptHandler = "fsiTxInt2ISR";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+fsirx1.fsirx.fsirx_clkPin.$suggestSolution = "hsecDigital.105";

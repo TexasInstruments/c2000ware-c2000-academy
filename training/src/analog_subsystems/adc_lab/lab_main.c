@@ -4,7 +4,7 @@
 //
 // TITLE: adc lab
 //
-// C2K ACADEMY URL: https://dev.ti.com/tirex/explore/node?node=AOpze8ebskysmgASY3VKSA__jEBbtmC__LATEST
+// C2K ACADEMY URL: https://dev.ti.com/tirex/local?id=source_c2000_academy_labs_analog_subsystem_c2000_lab_adc&packageId=C2000-ACADEMY
 //
 //! \addtogroup academy_lab_list
 //! <h1> Using Analog Subsystems Lab - Sysconfig </h1>

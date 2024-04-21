@@ -4,7 +4,7 @@
 //
 // TITLE: Structure Shared between .c and .cla files
 //
-// C2K ACADEMY URL: https://dev.ti.com/tirex/explore/node?node=AOpze8ebskysmgASY3VKSA__jEBbtmC__LATEST
+// C2K ACADEMY URL: https://dev.ti.com/tirex/local?id=source_c2000_academy_labs_advanced_topics_c2000_lab_cla&packageId=C2000-ACADEMY
 //
 // In this lab, we will use the Control Law Accelerator (CLA) to implement a
 // FIR lowpass filter. We will apply a PWM waveform to the input of our

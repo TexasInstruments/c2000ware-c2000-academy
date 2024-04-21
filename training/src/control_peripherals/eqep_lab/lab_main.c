@@ -4,7 +4,7 @@
 //
 // TITLE:  Lab - Enhanced Quadrature Encoder Pulse (eQEP)
 //
-// C2K ACADEMY URL:
+// C2K ACADEMY URL: https://dev.ti.com/tirex/local?id=source_c2000_academy_labs_control_peripherals_c2000_lab_qep&packageId=C2000-ACADEMY
 //
 //
 //

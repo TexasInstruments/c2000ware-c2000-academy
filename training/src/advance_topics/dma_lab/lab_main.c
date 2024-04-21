@@ -4,7 +4,7 @@
 //
 // TITLE:  DMA lab using SysConfig
 //
-// DMA SysCfg Example
+// C2K ACADEMY URL: https://dev.ti.com/tirex/local?id=source_c2000_academy_labs_advanced_topics_c2000_lab_dma&packageId=C2000-ACADEMY 
 //
 // This example is an lab project for DMA setup using sysconfig
 //

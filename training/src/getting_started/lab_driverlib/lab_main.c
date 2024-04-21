@@ -4,7 +4,7 @@
 //
 // TITLE: Lab - blinky LED using driverlib function
 //
-// C2K ACADEMY URL: https://dev.ti.com/tirex/explore/node?node=AOpze8ebskysmgASY3VKSA__jEBbtmC__LATEST
+// C2K ACADEMY URL: https://dev.ti.com/tirex/local?id=source_c2000_get_started_c2000_getstarted&packageId=C2000-ACADEMY
 //
 //! \addtogroup academy_lab_list
 //! <h1> Getting Started Lab </h1>

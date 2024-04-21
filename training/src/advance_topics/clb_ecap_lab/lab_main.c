@@ -4,7 +4,7 @@
 //
 // TITLE:  CLB eCAP Example
 //
-// CLB eCAP SysCfg Example
+// C2K ACADEMY URL: https://dev.ti.com/tirex/local?id=source_c2000_academy_labs_advanced_topics_c2000_lab_clb_ecap&packageId=C2000-ACADEMY
 //
 // This example is a CLB eCAP setup for SysConfig development. The myEPWM0 is
 // used to apply a signal in place of an external signal from a GPIO pin. The

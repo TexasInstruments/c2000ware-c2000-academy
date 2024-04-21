@@ -3,7 +3,7 @@
         name="lab_lp_f2837xd"
         device="TMS320F28379D"
         cgtVersion="22.6.0.LTS"
-        products="c2000ware_software_package"
+        products="C2000WARE"
         outputFormat="ELF"
         launchWizard="False"
         linkerCommandFile=""

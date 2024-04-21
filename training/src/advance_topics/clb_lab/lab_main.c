@@ -4,7 +4,7 @@
 //
 // TITLE:  Lab - CLB Lab
 //
-// C2K ACADEMY URL:
+// C2K ACADEMY URL: https://dev.ti.com/tirex/local?id=source_c2000_academy_labs_advanced_topics_c2000_lab_clb&packageId=C2000-ACADEMY
 //
 //! \addtogroup academy_lab_list
 //! <h1> CLB Example Lab</h1>
