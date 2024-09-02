@@ -30,7 +30,7 @@ cputimer1.registerInterrupts       = true;
 cputimer1.timerPeriod              = 200000000;
 cputimer1.timerInt.enableInterrupt = true;
 
-sci1.$hardware = system.deviceData.board.components.BP_SITE_1.subComponents.SCI;
+sci1.$hardware = system.deviceData.board.components.XDS_UART.subComponents.XDS_SCI_INST1;
 sci1.baudRates = 9600;
 sci1.$name     = "mySCIA";
 

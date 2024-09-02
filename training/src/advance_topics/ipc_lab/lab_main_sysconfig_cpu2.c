@@ -118,7 +118,7 @@ interrupt void ipc0_ISR(void)
 
     // Toggle LED2 at a rate of 1Hz.
     if (LedCtr2++ >= 50000) {
-        GPIO_togglePin(myBoardLED1_GPIO_GPIO_PIN_CONFIG);
+        GPIO_togglePin(DEVICE_GPIO_PIN_LED2);
         LedCtr2 = 0;
     }
 }

@@ -19,7 +19,7 @@
     <file action="copy" path="../../../../../device_support/f28p55x/common/source/device.c" targetDirectory="device" />
     <file action="copy" path="../../../../../device_support/f28p55x/headers/include/" targetDirectory="device" />
     <file action="copy" path="../../../../../device_support/f28p55x/common/source/f28p55x_codestartbranch.asm" targetDirectory="device" />
-    <file action="copy" path="../../../../../device_support/f28p55x/common/targetConfigs/TMS320F2TMS320F28P550SJ9_LaunchPad8P550SJ9.ccxml" targetDirectory="targetConfigs" applicableConfigurations="CPU1_RAM, CPU1_FLASH" />
+    <file action="copy" path="../../../../../device_support/f28p55x/common/targetConfigs/TMS320F28P550SJ9_LaunchPad.ccxml" targetDirectory="targetConfigs" applicableConfigurations="CPU1_RAM, CPU1_FLASH" />
     <file action="copy" path="28p55x_cla_lab_ram_lnk.cmd" targetDirectory="" applicableConfigurations="CPU1_RAM" />
     <file action="copy" path="28p55x_cla_lab_flash_lnk.cmd" targetDirectory="" applicableConfigurations="CPU1_FLASH" />
     <file action="link" path="../../../../../driverlib/f28p55x/driverlib/ccs/Debug/driverlib.lib" targetDirectory="" />

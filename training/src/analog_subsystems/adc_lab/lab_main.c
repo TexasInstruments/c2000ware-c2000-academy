@@ -135,7 +135,7 @@ void main(void)
 interrupt void INT_myADCA_1_ISR(void)
 {
     static uint16_t *AdcBufPtr = AdcBuf;
-    uint16_t LED_count = 0;
+    static volatile uint16_t LED_count = 0;
 
     // Read the ADC Result
     *AdcBufPtr++ = ADC_readResult(myADCA_RESULT_BASE, myADCA_SOC0);
