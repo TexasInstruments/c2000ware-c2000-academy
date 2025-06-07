@@ -2,7 +2,7 @@
   <project
         name="adc_cc_f2838x"
         device="TMS320F28388D"
-        cgtVersion="22.6.0.LTS"
+        cgtVersion="22.6.2.LTS"
         products="C2000WARE"
         outputFormat="ELF"
         launchWizard="False"
@@ -11,7 +11,7 @@
         sysConfigBuildOptions="--product ${C2000WARE_ROOT}/.metadata/sdk.json --board /boards/TMDSCNCD28388D"
         >
     <configuration name="CPU1_RAM" compilerBuildOptions="--opt_level=off -I${PROJECT_ROOT}/device -I${C2000WARE_DLIB_ROOT} -v28 -ml -mt --define=DEBUG --cla_support=cla2 --float_support=fpu32 --tmu_support=tmu0 --vcu_support=vcu0 --diag_warning=225 --diag_suppress=10063 --display_error_number --define=CPU1 --define=USE_ADC_REFERENCE_INTERNAL " linkerBuildOptions="--entry_point code_start --stack_size=0x100  " />
-    <configuration name="CPU1_FLASH" compilerBuildOptions="--opt_level=off -I${PROJECT_ROOT}/device -I${C2000WARE_DLIB_ROOT} -v28 -ml -mt --cla_support=cla2 --float_support=fpu32 --gen_func_subsections=on --define=DEBUG  --define=USE_ADC_REFERENCE_INTERNAL --define=_FLASH --diag_warning=225 --diag_suppress=10063" linkerBuildOptions="--entry_point code_start --stack_size=0x200 --heap_size=0x100  --define=_FLASH"/>
+    <configuration name="CPU1_FLASH" compilerBuildOptions="--opt_level=off -I${PROJECT_ROOT}/device -I${C2000WARE_DLIB_ROOT} -v28 -ml -mt --cla_support=cla2 --float_support=fpu32 --gen_func_subsections=on --define=DEBUG  --define=USE_ADC_REFERENCE_INTERNAL --define=_FLASH  --define=CPU1 --diag_warning=225 --diag_suppress=10063" linkerBuildOptions="--entry_point code_start --stack_size=0x200 --heap_size=0x100  --define=_FLASH"/>
     <pathVariable name="C2000WARE_DLIB_ROOT" path="../../../../../driverlib/f2838x/driverlib" scope="project" />
     <pathVariable name="C2000WARE_ROOT" path="../../../../../" scope="project" />
     <file action="copy" path="../../../../../device_support/f2838x/common/include/driverlib.h" targetDirectory="device" />

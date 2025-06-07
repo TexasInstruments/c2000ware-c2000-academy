@@ -6,8 +6,26 @@
 //
 // C2K ACADEMY URL: https://dev.ti.com/tirex/local?id=source_c2000_academy_labs_control_peripherals_c2000_lab_qep&packageId=C2000-ACADEMY
 //
-//
-//
+//! \addtogroup academy_lab_list
+//! <h1> eQEP Academy Lab - Sysconfig </h1>
+//!
+//! The objective of this lab is to gain familiarity with the Enhanced Quadrature
+//! Encoder Pulse (eQEP) module. This lab will illustrate a common use-case of 
+//! the eQEP module: connecting quadrature signals to the C2000 device and using
+//! the eQEP to calculate motor characteristics.
+//!
+//! \b External \b Connections \n
+//!  - Connect the PWM1_A GPIO and EQEP1_A GPIO
+//!  - Connect the PWM1_B GPIO and EQEP1_B GPIO
+//!  - Connect the myGPIOIndex GPIO and EQEP1_I GPIO
+//!  - Refer to Academy Lab instruction for exact pin for your device/board
+//!
+//! \b Watch \b Variables \n
+//!  - currentEncoderPosition
+//!  - frequency
+//!  - speed
+//!  - direction
+//!
 //#############################################################################
 //
 //
@@ -55,19 +73,50 @@
 //
 // Defines
 //
-#define ENCODER_SLOTS   1000U           // LVSERVOMTR is a 1000-line encoder
-#define UNIT_PERIOD     10000U          // Unit period in microseconds
+
+//
+// LVSERVOMTR is a 1000-line encoder
+//
+#define ENCODER_SLOTS   1000U      
+
+//
+// Unit period in microseconds
+//
+#define UNIT_PERIOD     10000U 
 
 //
 // Globals
 //
-uint32_t oldCount = 0;                  // stores the previous position counter value
-uint32_t newCount = 0;                  // stores the new position counter value for frequency calculation
 
-uint32_t currentEncoderPosition = 0;    // stores the current encoder position
-int32_t frequency = 0;                  // measured quadrature signal frequency of motor using eQEP
-float32_t speed = 0.0f;                 // measured speed of motor in rpm
-int32_t direction = 0;                  // direction of rotation of motor
+//
+// Stores the previous position counter value
+//
+uint32_t oldCount = 0; 
+
+//
+// Stores the new position counter value for frequency calculation
+//
+uint32_t newCount = 0;                  
+
+//
+// Stores the current encoder position
+//
+uint32_t currentEncoderPosition = 0;   
+
+//
+// Measured quadrature signal frequency of motor using eQEP
+//
+int32_t frequency = 0;    
+
+//
+// Measured speed of motor in rpm
+//
+float32_t speed = 0.0f;  
+
+//
+// Direction of rotation of motor
+//
+int32_t direction = 0;                  
 
 //
 // Main
@@ -95,8 +144,10 @@ void main(void)
     //
     Interrupt_initVectorTable();
 
-    // Board Initialization
-	Board_init();
+    //
+    // Initialize all of the required peripherals using SysConfig
+    //
+    Board_init();
 
     //
     // Enable Global Interrupt (INTM) and realtime interrupt (DBGM)
@@ -109,6 +160,7 @@ void main(void)
     //
     while(1)
     {
+
         //
         // myGPIOIndex pulses high for 200 microseconds every 1000 encoder cycles (400,000 us)
         //
@@ -174,7 +226,7 @@ INT_myEQEP1_ISR(void)
     //
     EQEP_clearInterruptStatus(myEQEP1_BASE,EQEP_INT_UNIT_TIME_OUT|EQEP_INT_GLOBAL);
     Interrupt_clearACKGroup(INT_myEQEP1_INTERRUPT_ACK_GROUP);
- }
+}
 
 //
 // End of File

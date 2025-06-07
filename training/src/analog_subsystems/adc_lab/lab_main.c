@@ -7,7 +7,7 @@
 // C2K ACADEMY URL: https://dev.ti.com/tirex/local?id=source_c2000_academy_labs_analog_subsystem_c2000_lab_adc&packageId=C2000-ACADEMY
 //
 //! \addtogroup academy_lab_list
-//! <h1> Using Analog Subsystems Lab - Sysconfig </h1>
+//! <h1> Analog Subsystems (ADC) Academy Lab - Sysconfig </h1>
 //!
 //! The objective of this lab exercise is to become familiar with the
 //! programming and operation of the on-chip analog-to-digital converter (ADC).
@@ -20,7 +20,7 @@
 //!  - Refer to Academy Lab instruction for exact pin for your device/board
 //!
 //! \b Watch \b Variables \n
-//!  - None.
+//!  - AdcBuf
 //!
 //#############################################################################
 // $Copyright:
@@ -66,15 +66,29 @@
 // Global variables and definitions
 //
 #define ADC_BUF_LEN         50
-uint16_t DEBUG_TOGGLE = 1;    // Used for real-time mode
-uint16_t AdcBuf[ADC_BUF_LEN];  // ADC buffer allocation
 
+//
+// Variable used to enable/disable real-time mode
+//
+uint16_t DEBUG_TOGGLE = 1;
+
+//
+// ADC buffer allocation
+//
+uint16_t AdcBuf[ADC_BUF_LEN];  
+
+//
+// Includes/excludes buffered DAC code depending on if a DAC module is
+// present on the device. 
+//
 #ifdef DACB_BASE
 uint16_t DacOutput;
 uint16_t DacOffset;
 uint16_t SINE_ENABLE = 0;
 
-// quadrature look-up table: contains 4 quadrants of sinusoid data points
+//
+// Quadrature look-up table: contains 4 quadrants of sinusoid data points
+//
 #define SINE_PTS 25
 int QuadratureTable[SINE_PTS] = {
         0x0000,         // [0]  0.0
@@ -103,6 +117,7 @@ int QuadratureTable[SINE_PTS] = {
         0xC257,         // [23] 331.2
         0xE02C          // [24] 345.6
         };
+
 #endif
 
 //
@@ -115,19 +130,35 @@ __interrupt void INT_myADCA_1_ISR(void);
 //
 void main(void)
 {
-    // CPU Initialization
+    //
+    // Initialize device clock and peripherals
+    //      
     Device_init();
+    
+    //
+    // Initialize PIE and clear PIE registers. Disables CPU interrupts.
+    //
     Interrupt_initModule();
+    
+    //
+    // Initialize the PIE vector table with pointers to the shell Interrupt
+    // Service Routines (ISR).
+    //
     Interrupt_initVectorTable();
-
-    // Configure the GPIOs/ADC/PWM through SysConfig generated files
+    
+    //
+    // Initialize all of the required peripherals using SysConfig
+    //
     Board_init();
 
     // Enable global interrupts and real-time debug
+    //
     EINT;
     ERTM;
 
+    //
     // Main Loop
+    //
     while(1){}
 
 }
@@ -137,30 +168,52 @@ interrupt void INT_myADCA_1_ISR(void)
     static uint16_t *AdcBufPtr = AdcBuf;
     static volatile uint16_t LED_count = 0;
 
+    //
     // Read the ADC Result
+    //
     *AdcBufPtr++ = ADC_readResult(myADCA_RESULT_BASE, myADCA_SOC0);
 
+    //
     // Brute Force the circular buffer
+    //
     if (AdcBufPtr == (AdcBuf + ADC_BUF_LEN))
     {
         AdcBufPtr = AdcBuf;
     }
 
-    // Toggle the pin
+    //
+    // Toggle the pin : real-time mode
+    //
     if(DEBUG_TOGGLE == 1)
     {
         GPIO_togglePin(myGPIOToggle);
     }
 
-    if(LED_count++ > 25000)                      // Toggle slowly to see the LED blink
+    //
+    // Toggle slowly to see the LED blink
+    //
+    if(LED_count++ > 25000)                      
     {
-        GPIO_togglePin(myBoardLED0_GPIO);                   // Toggle the pin
-        LED_count = 0;                           // Reset the counter
+        //
+        // Toggle the pin
+        //
+        GPIO_togglePin(myBoardLED0_GPIO);       
+
+        //
+        // Reset the counter
+        //            
+        LED_count = 0;                           
     }
 
 #ifdef DACB_BASE
+    //
     // Write to DAC-B to create input to ADC-A0
-    static uint16_t iQuadratureTable = 0;        // Quadrature table index
+    //
+
+    //
+    // Define Quadrature table index
+    //
+    static uint16_t iQuadratureTable = 0;        
 
     if(SINE_ENABLE == 1)
     {
@@ -170,7 +223,10 @@ interrupt void INT_myADCA_1_ISR(void)
     {
         DacOutput = DacOffset;
     }
-    if(iQuadratureTable > (SINE_PTS - 1))        // Wrap the index
+    //
+    // Wrap the index
+    //
+    if(iQuadratureTable > (SINE_PTS - 1))        
     {
         iQuadratureTable = 0;
     }
@@ -180,6 +236,7 @@ interrupt void INT_myADCA_1_ISR(void)
     Interrupt_clearACKGroup(INT_myADCA_1_INTERRUPT_ACK_GROUP);
     ADC_clearInterruptStatus(myADCA_BASE, ADC_INT_NUMBER1);
 } // End of ADC ISR
+
 //
 // End of File
 //

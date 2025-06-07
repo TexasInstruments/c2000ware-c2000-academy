@@ -120,8 +120,8 @@ __interrupt void adcA1ISR(void)
 __interrupt void ecap1ISR(void)
 {
     Interrupt_clearACKGroup(INT_myECAP0_INTERRUPT_ACK_GROUP);
-    ECAP_clearGlobalInterrupt(myECAP0_BASE);
     ECAP_clearInterrupt(myECAP0_BASE, ECAP_ISR_SOURCE_CAPTURE_EVENT_3);
+    ECAP_clearGlobalInterrupt(myECAP0_BASE);
     eCapPwmDuty = (int32_t)ECAP_getEventTimeStamp(myECAP0_BASE, ECAP_EVENT_2) -
                   (int32_t)ECAP_getEventTimeStamp(myECAP0_BASE, ECAP_EVENT_1);
     eCapPwmPeriod = (int32_t)ECAP_getEventTimeStamp(myECAP0_BASE, ECAP_EVENT_3) -

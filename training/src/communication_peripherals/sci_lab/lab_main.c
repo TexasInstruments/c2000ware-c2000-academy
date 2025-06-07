@@ -2,12 +2,12 @@
 //
 // FILE: lab_main.c
 //
-// TITLE: Lab - SCI communication
+// TITLE: SCI Academy Lab
 //
 // C2K ACADEMY URL: https://dev.ti.com/tirex/local?id=source_c2000_academy_labs_communications_lab_c2000_lab_sci&packageId=C2000-ACADEMY
 //
 //! \addtogroup academy_lab_list
-//! <h1> Lab solution on Using Communication Peripherals </h1>
+//! <h1> SCI Academy Lab - Sysconfig </h1>
 //!
 //! The objective of this lab is to become familiar with the on-board SCI
 //! (Serial Communication Interface) by sending and receiving data between a

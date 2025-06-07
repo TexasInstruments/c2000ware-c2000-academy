@@ -7,7 +7,7 @@
 // C2K ACADEMY URL: https://dev.ti.com/tirex/local?id=source_c2000_academy_labs_system_control_c2000_lab_system_design&packageId=C2000-ACADEMY
 //
 //! \addtogroup academy_lab_list
-//! <h1> System Design Example Lab </h1>
+//! <h1> System Design Academy Lab </h1>
 //!
 //! This lab will build on all of the different topics covered thus far. As a system
 //! example, the epwm module is setup to output a 50kHz output with a duty cycle
@@ -19,7 +19,7 @@
 //!  - Refer to Academy Lab instruction for exact pin for your device/board
 //!
 //! \b Watch \b Variables \n
-//!  - None.
+//!  - interruptCount - Counter incremented in each ISR
 //!
 //#############################################################################
 // $Copyright:
@@ -72,19 +72,49 @@
 #define comp_threshold          2500
 
 #ifdef DACA_BASE
-    #define USE_DAC                 //Comment line if not using DAC
+    //Comment line if not using DAC
+    #define USE_DAC              
 #endif
+
 
 //
 // Globals
 //
-uint16_t adcAResult;          /// value used to store ADC conversion
-uint16_t CMPA_result;         /// value used to calculate CMPA for new duty cycle value
-uint16_t dacVal = 1000;       /// value used to set the DAC output
-uint16_t ledBlinkRate = 50;   /// initialized value for LED blink rate
-uint16_t LED_count = 0;       /// LED counter
-uint16_t interruptCount=0;
-float duty;                   /// value that holds part of the calculation for CMPA
+
+//
+// Variable used to store ADC conversion
+//
+uint16_t adcAResult;          
+
+//
+// Variable used to calculate CMPA for new duty cycle value
+//
+uint16_t CMPA_result;      
+
+//
+// Variable used to set the DAC output
+//
+uint16_t dacVal = 1000;
+
+//
+// Initialized value for LED blink rate
+//
+uint16_t ledBlinkRate = 50;
+
+//
+// LED counter
+//
+uint16_t LED_count = 0;    
+
+//
+// Counter incremented in each ISR
+//
+uint16_t interruptCount = 0;
+
+//
+// Variable that holds part of the calculation for CMPA
+//
+float duty;                   
 
 //
 // Function Prototypes
@@ -96,6 +126,7 @@ __interrupt void INT_myADCA_1_ISR(void);
 //
 void main(void)
 {
+    
     //
     // Initialize device clock and peripherals
     //
@@ -158,7 +189,9 @@ void main(void)
             {
 
                #ifdef USE_DAC
-               //Update DAC value in case updated during this time
+               //
+               // Update DAC value in case updated during this time
+               //
                DAC_setShadowValue(myDACA_BASE, dacVal);
                #endif
             }
@@ -174,6 +207,7 @@ void main(void)
 __interrupt void INT_myADCA_1_ISR(void)
 {
     interruptCount = interruptCount+1;
+
     //
     // Get the latest ADC conversion result
     //
@@ -198,12 +232,20 @@ __interrupt void INT_myADCA_1_ISR(void)
     //
     // Toggle the LED based upon the duty cycle chosen
     //
-    if(LED_count++ > ledBlinkRate)               // Toggle LED to change state
+    if(LED_count++ > ledBlinkRate)
     {
-        GPIO_togglePin(myBoardLED0_GPIO);    // Toggle the pin
-        LED_count = 0;                           // Reset the counter
+        //
+        // Toggle the pin
+        //
+        GPIO_togglePin(myBoardLED0_GPIO);  
+
+        //
+        // Reset the counter
+        //
+        LED_count = 0;                           
     }
 
+    //
     // Clear the interrupt flag
     //
     ADC_clearInterruptStatus(myADCA_BASE, ADC_INT_NUMBER1);
